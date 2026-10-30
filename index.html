@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="icon" href="assets/arcid-logo.png">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#fff;--surf:#fff;--s2:#F8F9FA;--ink:#202124;--mute:#5F6368;--line:#DADCE0;--acc:#1A73E8;--accInk:#fff;--accSoft:#E8F0FE;--g:#188038;--gInk:#fff;--gSoft:#E6F4EA;--r:#D93025;--rSoft:#FCE8E6;--yInk:#B06000;--ySoft:#FEF7E0;--errbg:var(--rSoft);--err:var(--r);--warnbg:var(--ySoft);--warn:var(--yInk);--soft:var(--accSoft)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1E1E1E;--surf:#28292A;--s2:#303134;--ink:#E8EAED;--mute:#9AA0A6;--line:#3C4043;--acc:#8AB4F8;--accInk:#202124;--accSoft:#2B3A55;--g:#81C995;--gInk:#202124;--gSoft:#1E3B2A;--r:#F28B82;--rSoft:#4A2523;--yInk:#FDD663;--ySoft:#4A3A12}}
@@ -25,6 +25,7 @@ a{color:inherit}
 .wrap{max-width:1200px;margin:0 auto;padding:0 20px}
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;display:flex;align-items:center;justify-content:space-between;height:68px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px)}
 .brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:22px;text-decoration:none}
+.brand-logo{width:32px;height:32px;object-fit:contain}
 .top nav{display:flex;align-items:center;gap:6px;font-size:15px;font-weight:600}
 .top nav a:not(.btn){text-decoration:none;color:var(--mute);padding:8px 14px;border-radius:99px;transition:background .2s,color .2s}
 .top nav a:not(.btn):hover{background:var(--accSoft);color:var(--acc)}
@@ -138,6 +139,21 @@ details p{padding:0 22px 20px;color:var(--mute);max-width:64ch}
 .chips button[aria-pressed="true"]{background:var(--accSoft);border-color:var(--acc);color:var(--acc)}
 .note{font-size:13px;color:var(--mute);text-align:center}
 .ft{border-top:1px solid var(--line);margin-top:72px;padding:28px 0 44px;color:var(--mute);font-size:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+#splash{position:fixed;inset:0;z-index:100;background:#1E1E1E;font-size:clamp(13px,4.6vw,22px);clip-path:circle(150% at 50% 50%);transition:clip-path .8s cubic-bezier(.7,0,.2,1)}
+#splash.out{clip-path:circle(0 at 50% 50%)}#splash[hidden]{display:none}
+#splash .intro{height:100%}
+.skip{position:absolute;right:24px;bottom:24px;z-index:3;min-height:42px;padding:0 20px;border-radius:99px;border:1px solid #5F6368;background:transparent;color:#E8EAED;font:600 14px "Plus Jakarta Sans",sans-serif;cursor:pointer}
+.skip:hover{background:rgba(255,255,255,.1)}
+.intro{position:relative;width:100%;flex:1;min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;overflow:hidden}
+.scr .intro{font-size:11px}
+.arcid-stage{position:relative;width:6em;height:6em;display:grid;place-items:center;flex:none;animation:arcid-drop 1.05s cubic-bezier(.2,.9,.3,1.2) both}
+.arcid-logo{width:100%;height:100%;object-fit:contain;filter:invert(1) drop-shadow(0 0 1em rgba(255,255,255,.22))}
+.arcid-shadow{position:absolute;bottom:-.22em;width:64%;height:.12em;border-radius:50%;background:rgba(255,255,255,.35);filter:blur(.16em);animation:arcid-shadow .9s .12s ease-out both}
+.arcid-name{display:flex;gap:.06em;margin-top:.85em;font:700 1.9em/1 Sora,"Plus Jakarta Sans",sans-serif;letter-spacing:.04em}
+.arcid-name span{display:inline-block;opacity:0;transform:translateY(.45em);animation:arcid-letter .45s calc(.8s + var(--i)*.055s) cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes arcid-drop{0%{opacity:0;transform:translateY(-1.4em) scale(.72)}65%{opacity:1;transform:translateY(.12em) scale(1.04)}82%{transform:translateY(-.06em) scale(.99)}100%{transform:none}}
+@keyframes arcid-shadow{from{transform:scale(.35);opacity:0}to{transform:scale(1);opacity:.7}}
+@keyframes arcid-letter{to{opacity:1;transform:none}}
 .rv{opacity:0;translate:0 var(--dy,28px);scale:.97;transition:opacity .6s ease,translate .7s cubic-bezier(.2,.7,.2,1),scale .7s cubic-bezier(.2,.7,.2,1),transform .25s,box-shadow .25s,background .2s}
 .rv.in{opacity:1;translate:0 0;scale:1;transition-delay:var(--d,0s),var(--d,0s),var(--d,0s),0s,0s,0s}
 .top{transition:box-shadow .3s}.top.stuck{box-shadow:0 1px 0 var(--line),0 8px 20px rgba(60,64,67,.12)}
@@ -160,191 +176,196 @@ body{overflow-x:clip}
 @media(max-width:1000px){.mb{display:inline-flex}.top nav{position:absolute;top:100%;left:0;right:0;display:none;flex-direction:column;align-items:stretch;gap:2px;margin-top:6px;padding:8px;background:var(--surf);border:1px solid var(--line);border-radius:20px;box-shadow:0 12px 28px rgba(60,64,67,.2)}.top nav.open{display:flex}.top nav a:not(.btn){padding:12px 16px;border-radius:14px}}
 @media(max-width:480px){.tr .btn.sm{display:none}.hero{padding:36px 20px;border-radius:24px;min-height:0}.wrap{padding:0 14px}.hero .btns .btn{flex:1 1 100%}.dkb,.cta{border-radius:24px}}
 @media(pointer:coarse){.chips button{min-height:42px}.tablist button{min-height:56px}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}.rv{opacity:1!important;transform:none!important;translate:none!important;scale:none!important}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}.rv,.arcid-name span{opacity:1!important;transform:none!important;translate:none!important;scale:none!important}}
 
 .station3d-section{margin:72px 0 28px;padding:34px;border:1px solid var(--line);border-radius:30px;background:var(--s2);scroll-margin-top:92px}
 .station3d-head{display:flex;justify-content:space-between;align-items:flex-start;gap:22px;margin-bottom:24px}.station3d-head>div{max-width:720px}.station-kicker{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--acc)}.station3d-head h2{font-size:clamp(28px,3.6vw,40px);line-height:1.1;margin:8px 0}.station3d-head p{color:var(--mute);max-width:68ch}.model-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);background:var(--surf);border-radius:99px;font-size:13px;font-weight:700;white-space:nowrap}.model-badge i,.state-led{width:9px;height:9px;border-radius:50%;background:#34A853;box-shadow:0 0 0 4px rgba(52,168,83,.12)}
-.station3d-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(300px,.75fr);gap:18px;align-items:stretch}.station-view-card,.station-control-card{background:var(--surf);border:1px solid var(--line);border-radius:24px;overflow:hidden}.station-canvas-wrap{height:510px;position:relative;background:radial-gradient(ellipse at 50% 38%,#e9f0f8 0%,#dce5ef 54%,#d4dce5 100%)}:root[data-theme=dark] .station-canvas-wrap{background:radial-gradient(ellipse at 50% 38%,#34404e,#202833 70%)}@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .station-canvas-wrap{background:radial-gradient(ellipse at 50% 38%,#34404e,#202833 70%)}}
+.station3d-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(300px,.75fr);gap:18px;align-items:stretch}.station-view-card,.station-control-card{background:var(--surf);border:1px solid var(--line);border-radius:24px;overflow:hidden}.station-canvas-wrap{height:460px;position:relative;background:radial-gradient(ellipse at 50% 38%,#e9f0f8 0%,#dce5ef 54%,#d4dce5 100%)}:root[data-theme=dark] .station-canvas-wrap{background:radial-gradient(ellipse at 50% 38%,#34404e,#202833 70%)}@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .station-canvas-wrap{background:radial-gradient(ellipse at 50% 38%,#34404e,#202833 70%)}}
 #station-canvas{display:block;width:100%;height:100%;touch-action:none}.station-svg-fallback{position:absolute;inset:0;width:100%;height:100%;display:grid;place-items:center}.station-svg-fallback svg{width:100%;height:100%}.canvas-hint{position:absolute;bottom:14px;left:16px;color:#526171;font-size:12px;background:rgba(255,255,255,.76);border-radius:99px;padding:6px 10px;pointer-events:none}.station-top-actions{position:absolute;top:14px;right:14px;display:flex;gap:8px}.model-icon-btn{border:1px solid rgba(50,60,70,.18);border-radius:12px;background:rgba(255,255,255,.9);color:#233044;min-height:38px;padding:0 12px;font:700 14px "Plus Jakarta Sans",sans-serif;cursor:pointer}.model-icon-btn:first-child{width:40px;padding:0;font-size:23px}.model-toast{position:absolute;left:50%;top:18px;transform:translate(-50%,-8px);opacity:0;background:#202124;color:white;border-radius:99px;padding:8px 13px;font-size:12px;transition:.2s;pointer-events:none}.model-toast.show{opacity:1;transform:translate(-50%,0)}
 .station-view-controls{display:flex;align-items:center;gap:8px;padding:12px 14px;flex-wrap:wrap}.station-toggle{border:1px solid var(--line);background:var(--surf);border-radius:12px;padding:8px 11px;color:var(--ink);font:600 13px "Plus Jakarta Sans",sans-serif;cursor:pointer}.station-toggle[aria-pressed=true]{background:var(--accSoft);border-color:var(--acc);color:var(--acc)}.station-toggle span{font-size:16px;margin-right:3px}.approx-dim{margin-left:auto;color:var(--mute);font-size:11px}
 .station-control-card{padding:18px;display:flex;flex-direction:column;gap:13px}.station-state{display:flex;align-items:center;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--line)}.state-led{flex:none}.state-led.busy{background:#F9AB00;box-shadow:0 0 0 4px rgba(249,171,0,.14)}.state-led.error{background:#D93025;box-shadow:0 0 0 4px rgba(217,48,37,.14)}.station-state small{display:block;color:var(--mute);font-size:10px;font-weight:800;letter-spacing:.09em}.station-state b{display:block;font-size:14px}.station-flow-controls{display:grid;grid-template-columns:1fr 1fr;gap:8px}.flow-btn{min-height:42px;border-radius:12px;border:1px solid var(--line);background:var(--surf);color:var(--ink);font:700 12px "Plus Jakarta Sans",sans-serif;cursor:pointer}.flow-btn.primary{border-color:var(--acc);background:var(--acc);color:var(--accInk)}.flow-btn:disabled{opacity:.48;cursor:not-allowed}.weight-control{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:600}.weight-control b{font-size:16px;color:var(--acc)}#station-weight{width:100%;accent-color:var(--acc);margin:0}.weight-range{display:flex;justify-content:space-between;color:var(--mute);font-size:10px;margin-top:-9px}.station-stagebox{padding:12px;border:1px solid var(--line);border-radius:15px;background:var(--s2)}.stage-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12px}.stage-title span{color:var(--mute);font-size:10px}.station-stages{list-style:none;padding:0;display:grid;gap:5px}.station-stages li{position:relative;padding:5px 7px 5px 24px;border-radius:8px;color:var(--mute);font-size:11px;transition:.2s}.station-stages li:before{content:"";position:absolute;left:8px;top:11px;width:7px;height:7px;border:1.5px solid var(--line);border-radius:50%}.station-stages li.active{background:var(--accSoft);color:var(--acc);font-weight:700}.station-stages li.active:before{background:var(--acc);border-color:var(--acc)}.station-stages li.done{color:var(--g)}.station-stages li.done:before{content:"✓";border:0;top:4px;font-weight:900}.station-note{color:var(--mute);font-size:11px;line-height:1.5;min-height:34px}
 .component-strip{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.component-chip{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 13px;border:1px solid var(--line);border-radius:99px;background:var(--surf);color:var(--mute);font:600 12px "Plus Jakarta Sans",sans-serif;cursor:pointer}.component-chip.active{color:var(--acc);border-color:var(--acc);background:var(--accSoft)}.chip-dot{width:9px;height:9px;border-radius:3px}.chip-dot.esp{background:#243b59}.chip-dot.rfid{background:#3178ce}.chip-dot.scale{background:#ef4937}.chip-dot.servo{background:#4b5563}.chip-dot.buzzer{background:#252a32}.component-detail{display:grid;grid-template-columns:38px minmax(0,1fr) auto;align-items:center;gap:12px;margin-top:12px;padding:14px 16px;background:var(--surf);border:1px solid var(--line);border-radius:16px}.component-number{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--accSoft);color:var(--acc);font:700 13px Outfit,sans-serif}.component-detail b{font-size:14px}.component-detail p{color:var(--mute);font-size:12px;line-height:1.45;margin-top:2px}.component-detail code{font-size:10px;color:var(--mute);text-align:right;max-width:260px;white-space:normal}.model-disclaimer{font-size:11px;color:var(--mute);margin:12px 2px 0}
 @media(max-width:900px){.station3d-grid{grid-template-columns:1fr}.station-control-card{display:grid;grid-template-columns:1fr 1fr;align-items:start}.station-state,.station-flow-controls{grid-column:span 2}.station-stagebox,.station-note{grid-column:span 2}.station-canvas-wrap{height:440px}}
 @media(max-width:560px){.station3d-section{padding:18px 13px;margin:48px 0;border-radius:24px}.station3d-head{display:block}.model-badge{margin-top:12px}.station-canvas-wrap{height:350px}.station-control-card{display:flex;padding:14px}.component-detail{grid-template-columns:34px 1fr}.component-detail code{grid-column:2;text-align:left}.approx-dim{width:100%;margin:0}.station-view-controls{gap:7px}}
-
-/* ARCID app styling for the embedded demo. The page background stays as-is. */
-.brand{gap:9px;font:700 17px/1 "Sora","Manrope",sans-serif;letter-spacing:.16em}
-.brand-logo{width:30px;height:30px;object-fit:contain}
-:root[data-theme=dark] .brand-logo{filter:invert(1)}
-@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .brand-logo{filter:invert(1)}}
-.hero{min-height:320px;padding:54px 48px;border-radius:26px}
-.hero h1{font:700 clamp(38px,5vw,58px)/1 "Sora","Manrope",sans-serif;letter-spacing:.02em}
-.hero .lead{font:400 16px/1.6 "Manrope","Plus Jakarta Sans",sans-serif;color:#c5cad4;max-width:48ch}
-.hero .btn{background:#3557d4;color:#fff}
-.hero .btn.alt{border-color:#626a79;color:#fff}
-.hero .txt,.shp{will-change:auto}
-.station3d-section{margin-top:44px;padding:26px;border-radius:24px}
-.station3d-head h2,.demo-heading h2{font-family:"Sora","Manrope",sans-serif;letter-spacing:-.025em}
-.station3d-head p{font-size:14px;max-width:52ch}
-.station-canvas-wrap{border-radius:16px}
-.station-control-card,.station-view-card{border-radius:18px}
-.station-flow-controls{grid-template-columns:1fr 1fr}
-.flow-btn{border-radius:10px;font-family:"Manrope","Plus Jakarta Sans",sans-serif}
-.flow-btn.primary{background:linear-gradient(135deg,#1f3a9f,#3557d4);border-color:transparent}
-.station-stagebox{background:#f5f7fc;border-color:#e7ebf4}
-.component-chip,.station-toggle{font-family:"Manrope","Plus Jakarta Sans",sans-serif;border-radius:10px}
-.component-chip.active{background:#eef2fd;color:#1f3a9f;border-color:#3557d4}
-.component-detail{border-radius:14px}
-.model-disclaimer{font-size:11px}
-.main{display:block;max-width:520px;margin:42px auto 0}
-.side{position:static;top:auto;gap:14px;padding:0;background:transparent;border:0;box-shadow:none}
-.demo-heading{width:100%;text-align:left;margin-bottom:2px}
-.demo-heading .station-kicker{font-size:10px;letter-spacing:.14em}
-.demo-heading h2{margin-top:4px;font-size:24px}
-.phone{--x-card:#fff;--x-soft:#f5f7fc;--x-ink:#1a2142;--x-ink2:#4b5472;--x-mute:#8c93ab;--x-line:#e7ebf4;--x-p:#1f3a9f;--x-p2:#3557d4;--x-ps:#eef2fd;--x-ok:#12805a;--x-oks:#e6f5ee;--x-bad:#d0433a;--x-bads:#fdeeec;--x-warn:#b4740f;--x-warns:#fff5e3;--x-sh:0 1px 2px rgba(26,33,66,.04),0 8px 22px -12px rgba(26,33,66,.16);--x-shc:0 18px 46px -32px rgba(31,58,159,.35),0 2px 6px rgba(26,33,66,.04);position:relative;width:100%;height:650px;background:transparent;border:0;border-radius:0;overflow:visible;box-shadow:none}
-.phone:before{display:none}
-.scr{height:100%;padding:32px 28px;display:flex;flex-direction:column;font:400 14px/1.55 "Manrope","Plus Jakarta Sans",sans-serif;color:var(--x-ink);background:var(--x-card);border:1px solid var(--x-line);border-radius:24px;box-shadow:var(--x-shc)}
-.scr h3{font:600 22px/1.28 "Sora","Manrope",sans-serif;letter-spacing:-.02em;color:var(--x-ink)}
-.scr[data-s=ok],.scr[data-s=err],.scr[data-s=busy],.scr[data-s=timeout]{background:var(--x-card)}
-.scr[data-s=intro]{background:transparent;border:0;box-shadow:none;padding:0}
-.scr .lg{width:62px;height:62px;margin:0 auto;filter:none}
-.scr .sub{color:var(--x-mute);line-height:1.55}
-.scr .box{background:var(--x-soft);border-radius:14px;padding:13px 14px;margin-top:10px;color:var(--x-ink2)}
-.scr .box.b{background:var(--x-card);border:1px solid var(--x-line)}
-.scr .pb{min-height:50px;margin-top:12px;padding:0 16px;border-radius:12px;background:linear-gradient(135deg,var(--x-p),var(--x-p2));color:#fff;font:600 14px "Manrope","Plus Jakarta Sans",sans-serif;box-shadow:0 12px 24px -12px var(--x-p)}
-.scr .pb:before{display:none}
-.scr .pb.alt{background:var(--x-card);color:var(--x-ink);border-color:var(--x-line);box-shadow:none}
-.scr .pb:disabled{background:var(--x-line);color:var(--x-mute);box-shadow:none}
-.scr .ic{width:72px;height:72px;margin:20px auto 16px;background:var(--x-ps);color:var(--x-p)}
-.scr[data-s=ok] .ic{background:var(--x-ok);color:#fff}
-.scr .ic.w{background:var(--x-warns);color:var(--x-warn)}
-.scr .ic.e{background:var(--x-bads);color:var(--x-bad)}
-.scr .slot{width:min(100%,260px);height:150px;margin:18px auto;border:1.5px dashed #b7c4e8;border-radius:16px;background:var(--x-ps);color:var(--x-p)}
-.scr .chk{padding:11px 12px;border-color:var(--x-line);border-radius:12px;background:var(--x-card)}
-.scr .chk.on{border-color:transparent;background:var(--x-oks);color:var(--x-ink)}
-.scr .bar{background:var(--x-line)}.scr .bar i{background:linear-gradient(90deg,var(--x-p),var(--x-p2))}
-.scr .dots i{background:var(--x-line)}.scr .dots i.f{background:var(--x-p2)}
-.scr .lg-top{display:flex;flex-direction:column;align-items:center;gap:12px;margin:2px 0 30px}
-.scr .lg-top img{width:62px;height:62px;object-fit:contain}
-.scr .lg-top span{font:700 19px/1 "Sora","Manrope",sans-serif;letter-spacing:.32em;text-indent:.32em;color:var(--x-p)}
-.scr .who-row{display:flex;align-items:center;gap:12px}
-.scr .av{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--x-p),var(--x-p2));color:#fff;font:600 17px "Sora","Manrope",sans-serif}
-.scr .who-row div{min-width:0}.scr .who-row b{display:block;font:600 16px/1.25 "Sora","Manrope",sans-serif;overflow-wrap:anywhere}.scr .who-row div span{display:block;margin-top:2px;font-size:12px;color:var(--x-mute)}
-.scr .stn{display:flex;align-items:center;gap:12px;margin-top:18px;padding:12px 14px;border-radius:12px;background:var(--x-soft)}.scr .stn.on{background:var(--x-oks)}.scr .stn .dot{flex:none;width:10px;height:10px;border-radius:50%;background:var(--x-mute)}.scr .stn.on .dot{background:var(--x-ok)}.scr .stn b{display:block;font-size:13.5px}.scr .stn div span{font-size:12px;color:var(--x-mute)}
-.scr .acts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}
-.scr .act{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-height:120px;padding:14px 13px;border:1px solid var(--x-line);border-radius:14px;background:var(--x-card);color:var(--x-ink);text-align:left;font:inherit;cursor:pointer;box-shadow:var(--x-sh)}
-.scr .act svg{width:24px;height:24px;color:var(--x-p)}.scr .act b{margin-top:auto;font:600 16px "Sora","Manrope",sans-serif}.scr .act span{font-size:11.5px;color:var(--x-mute)}
-.scr .act-p{border-color:transparent;background:linear-gradient(135deg,var(--x-p),var(--x-p2));color:#fff}.scr .act-p svg,.scr .act-p span{color:#fff}.scr .act-p span{opacity:.82}
-.scr .act:disabled{cursor:not-allowed;background:var(--x-soft);color:var(--x-mute);box-shadow:none}.scr .act:disabled svg,.scr .act:disabled span{color:var(--x-mute)}
-.scr .quota{margin-top:18px;padding:14px;border-radius:13px;background:var(--x-soft)}.scr .q-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:12px;font-weight:600;color:var(--x-ink2)}.scr .q-top b{font:600 19px/1 "Sora","Manrope",sans-serif;color:var(--x-ink)}.scr .q-top em{font-style:normal;font-size:13px;color:var(--x-mute)}
-.scr .q-bar{height:7px;margin-top:10px;border-radius:99px;background:var(--x-line);overflow:hidden}.scr .q-bar i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--x-p),var(--x-p2))}
-.scr .sec{margin:20px 0 8px;font-size:13px;font-weight:600}.scr .loans{display:grid;gap:8px;margin:0;padding:0;list-style:none}.scr .loan{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--x-line);border-radius:12px;background:var(--x-card)}.scr .loan-ic{flex:none;display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:var(--x-ps);color:var(--x-p)}.scr .loan-ic svg{width:22px;height:22px}.scr .loan div{flex:1;min-width:0}.scr .loan b{display:block;font-size:13px}.scr .loan div span{display:block;font-size:11px;color:var(--x-mute)}.scr .tag{padding:4px 8px;border-radius:99px;background:var(--x-oks);color:var(--x-ok);font-size:10px;font-weight:700;font-style:normal}.scr .empty{padding:16px;border:1px dashed var(--x-line);border-radius:12px;color:var(--x-mute);font-size:12px;text-align:center}
-.scr .screen-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}.scr .screen-head h3{margin:0}
-.screen-jump{width:100%;border:0;background:transparent;margin:2px 0 0;color:var(--mute)}
-.screen-jump summary{min-height:36px;padding:0 2px;font:600 12px "Manrope","Plus Jakarta Sans",sans-serif;color:var(--mute)}
-.screen-jump summary:after{font-size:20px}
-.screen-jump .chips{justify-content:flex-start;padding:10px 0}
-.screen-jump .chips button{font:600 11px "Manrope","Plus Jakarta Sans",sans-serif;border-radius:9px}
-.ft{margin-top:38px}
-:root[data-theme=dark] .phone{--x-card:#141a2e;--x-soft:#10162a;--x-ink:#edf0fa;--x-ink2:#bac1d8;--x-mute:#7d87a4;--x-line:#252d47;--x-p:#4766e3;--x-p2:#6e8bff;--x-ps:#1c2648;--x-ok:#4cc896;--x-oks:#132d25;--x-bad:#ff7a6e;--x-bads:#3a1d1d;--x-warn:#f2b44b;--x-warns:#33280f}
-
-/* Match the repository's ARCID splash: logo drop, bounce, and wordmark. */
-#splash{position:fixed;inset:0;z-index:100;background:linear-gradient(145deg,#fff 0%,#f7fbff 48%,#dceeff 100%);font-size:clamp(13px,4.6vw,22px);opacity:1;visibility:visible;clip-path:none;transition:opacity .65s ease,visibility .65s ease}
-#splash:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 46%,rgba(106,174,235,.22),transparent 34%);pointer-events:none}
-#splash.out{opacity:0;visibility:hidden;clip-path:none}#splash[hidden]{display:none}
-#splash .intro{height:100%}
-.intro{position:relative;width:100%;min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;text-align:center;color:#111}
-.arcid-stage{position:relative;width:clamp(156px,28vw,230px);height:clamp(186px,32vw,270px);display:flex;align-items:flex-end;justify-content:center}
-.arcid-logo{position:relative;z-index:2;display:block;width:100%;height:auto;transform-origin:50% 100%;animation:arcid-drop 2.45s cubic-bezier(.22,.78,.32,1) both;filter:drop-shadow(0 16px 16px rgba(14,45,72,.14))}
-.arcid-shadow{position:absolute;z-index:1;bottom:-5px;width:68%;height:18px;border-radius:50%;background:rgba(35,89,132,.18);filter:blur(7px);animation:arcid-shadow 2.45s ease-out both}
-.arcid-name{margin-top:24px;font:700 clamp(34px,7vw,58px)/1 "Outfit","Plus Jakarta Sans",sans-serif;letter-spacing:.28em;text-indent:.28em;color:#101820}
-.arcid-name span{display:inline-block;opacity:0;transform:translateY(16px);animation:arcid-letter .5s cubic-bezier(.2,.75,.25,1) calc(2.5s + var(--i)*.08s) forwards}
-@keyframes arcid-drop{0%{opacity:0;transform:translateY(-115vh) rotate(-8deg) scale(.92)}28%{opacity:1;transform:translateY(0) rotate(0) scale(1.03,.94)}42%{transform:translateY(-92px) rotate(2deg) scale(.98,1.02)}55%{transform:translateY(0) rotate(0) scale(1.025,.96)}66%{transform:translateY(-46px) rotate(-1deg) scale(.99,1.01)}76%{transform:translateY(0) rotate(0) scale(1.015,.975)}84%{transform:translateY(-18px) scale(.995,1.005)}92%{transform:translateY(0) scale(1.008,.988)}100%{opacity:1;transform:translateY(0) rotate(0) scale(1)}}
-@keyframes arcid-shadow{0%,20%{opacity:0;transform:scale(.25)}28%,55%,76%,92%,100%{opacity:1;transform:scale(1)}42%{opacity:.25;transform:scale(.56)}66%{opacity:.45;transform:scale(.72)}84%{opacity:.7;transform:scale(.88)}}
-@keyframes arcid-letter{to{opacity:1;transform:translateY(0)}}
-@media(max-width:520px){.arcid-stage{width:170px;height:205px}.arcid-name{margin-top:18px}}
-@media(max-width:560px){.station3d-section{padding:18px 13px}.phone{height:620px}.scr{padding:26px 20px}.main{margin-top:34px}}
-@media(prefers-reduced-motion:reduce){.arcid-logo,.arcid-shadow,.arcid-name span{animation:none;opacity:1;transform:none}}
+/* Keep the 3D controls quiet and neutral; the project explanation keeps its original theme. */
+.station-canvas-wrap{background:radial-gradient(ellipse at 50% 38%,#eeeeee 0%,#dddddd 60%,#cccccc 100%)}
+:root[data-theme=dark] .station-canvas-wrap{background:radial-gradient(ellipse at 50% 38%,#303030,#171717 72%)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .station-canvas-wrap{background:radial-gradient(ellipse at 50% 38%,#303030,#171717 72%)}}
+.station3d-section{--acc:#171717;--accInk:#fff;--accSoft:#ededed}
+:root[data-theme=dark] .station3d-section{--acc:#f0f0f0;--accInk:#111;--accSoft:#383838}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .station3d-section{--acc:#f0f0f0;--accInk:#111;--accSoft:#383838}}
+.station-control-card{gap:10px}.simulation-help{font-size:11px;line-height:1.45;color:var(--mute);margin-top:-6px}
+.station-more,.station-components{border:1px solid var(--line);border-radius:14px;background:var(--s2);padding:0 12px}
+.station3d-section .station-more summary,.station3d-section .station-components summary{min-height:42px;padding:0;font-size:12px;font-weight:700}
+.station3d-section .station-more summary:after,.station3d-section .station-components summary:after{font-size:20px}
+.station-more .station-stagebox{margin:0 0 12px}.station-components{margin-top:14px;background:var(--surf)}
+.station-components .component-strip{margin-top:8px}.station-components .component-detail{margin:10px 0 12px}
+.station-components .component-chip.active{color:var(--ink);border-color:#777;background:var(--accSoft)}
+.station-components .component-number{background:var(--accSoft);color:var(--ink)}
+.station-top-actions .model-icon-btn:first-child{width:auto;padding:0 12px;font-size:12px}
+.station-top-actions .model-icon-btn{min-height:34px;font-size:12px}
+.station-flow-controls{grid-template-columns:1fr}.flow-btn{min-height:44px;font-size:13px}
+.flow-btn.primary{border-color:#171717;background:#171717;color:#fff}
+:root[data-theme=dark] .flow-btn.primary{border-color:#4a4a4a;background:#171717;color:#fff}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .flow-btn.primary{border-color:#4a4a4a;background:#171717;color:#fff}}
+.station3d-section .station-stages li.active{background:var(--accSoft);color:var(--ink)}
+@media(max-width:900px){.station-control-card{display:flex}.station-state,.station-flow-controls,.station-stagebox,.station-note{grid-column:auto}}
 
 </style>
 </head>
 <body>
-<div id="splash" role="dialog" aria-label="Intro ARCID"></div>
+<div id="splash" hidden role="dialog" aria-label="Intro ARCID"></div>
+
+<img id="lg" src="assets/arcid-logo.png" alt="" hidden>
 <div class="wrap">
 <header class="top"><a class="brand" href="#" aria-label="ARCID, ke beranda"><img class="brand-logo" src="assets/arcid-logo.png" alt="">ARCID</a>
-<nav id="nv" aria-label="Navigasi"><a href="#station3d">Stasiun 3D</a><a href="#demo">Simulasi aplikasi</a></nav>
+<nav id="nv" aria-label="Navigasi"><a href="#info">Tentang</a><a href="#panel">Cara kerja</a><a href="#station3d">Model 3D</a><a href="#tanya">Tanya jawab</a></nav>
 <div class="tr"><a class="btn sm" href="#demo">Coba simulasi</a><button id="th" class="gh ibtn" type="button" aria-label="Ganti tema"></button><button id="mb" class="gh ibtn mb" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="nv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div></header>
 <main>
 <section class="hero">
+<i class="shp s1"></i><i class="shp s2"></i><i class="shp s3"></i><i class="shp s4"></i>
 <div class="txt">
-<h1>ARCID</h1>
-<p class="lead">Stasiun peminjaman wadah dengan verifikasi RFID dan berat otomatis.</p>
-<div class="btns"><button class="btn" id="start">Mulai simulasi</button> <a class="btn alt" href="#station3d">Lihat stasiun</a></div>
+<div class="tgs"><span class="tg"><i class="pulse" style="background:#34A853"></i>Prototipe</span><span class="tg"><i style="background:#4285F4"></i>Ramah lingkungan</span><span class="tg"><i style="background:#FBBC04"></i>Tanpa antre</span></div>
+<h1>Pinjam wadah makan di kampus, kembalikan tanpa antre.</h1>
+<p class="lead">Scan QR di stasiun, ambil wadahmu, selesai. Semua lewat HP, dan stasiun mencatat peminjamannya sendiri.</p>
+<div class="btns"><button class="btn" id="start">Coba simulasi</button> <a class="btn alt" href="#info">Pelajari lebih lanjut</a></div>
 </div>
 </section>
 
 <section class="station3d-section" id="station3d" aria-labelledby="station3d-title">
   <div class="station3d-head">
-    <div><span class="station-kicker">SLB-001</span><h2 id="station3d-title">Stasiun</h2><p>Jelajahi susunan komponen dan simulasikan peminjaman atau pengembalian.</p></div>
+    <div><span class="station-kicker">MODEL INTERAKTIF · SLB-001</span><h2 id="station3d-title">Lihat isi Stasiun Wadah Pintar</h2><p>Putar model untuk melihat susunan komponen. Pilih peminjaman atau pengembalian untuk menjalankan alurnya.</p></div>
+    <span class="model-badge"><i></i>Model 3D</span>
   </div>
   <div class="station3d-grid">
     <div class="station-view-card">
       <div class="station-canvas-wrap" id="station-canvas-wrap">
-        <canvas id="station-canvas" aria-label="Model 3D interaktif stasiun ARCID"></canvas>
-        <div class="canvas-hint">Seret untuk memutar · Gulir untuk zoom</div>
-        <div class="station-top-actions"><button class="model-icon-btn" id="station-reset" type="button" title="Atur ulang sudut pandang" aria-label="Atur ulang sudut pandang">↺</button><button class="model-icon-btn" id="station-export" type="button" title="Unduh model 3D GLB">↓ GLB</button></div>
+        <canvas id="station-canvas" aria-label="Model 3D interaktif Stasiun Wadah Pintar"></canvas>
+        <div class="canvas-hint">Seret untuk memutar · gulir untuk memperbesar</div>
+        <div class="station-top-actions"><button class="model-icon-btn" id="station-reset" type="button" title="Kembalikan sudut pandang awal" aria-label="Kembalikan sudut pandang awal">Atur ulang</button><button class="model-icon-btn" id="station-export" type="button" title="Unduh model stasiun 3D" aria-label="Unduh model stasiun 3D">Unduh model</button></div>
         <div class="model-toast" id="model-toast" role="status" aria-live="polite"></div>
       </div>
-      <div class="station-view-controls"><button class="station-toggle" id="station-explode" type="button" aria-pressed="false"><span>⇲</span> Pisahkan komponen</button><button class="station-toggle" id="station-door-toggle" type="button" aria-pressed="true"><span>↙</span> Tutup pintu</button><span class="approx-dim">Ukuran konsep ± 100 × 52 × 200 cm (L×D×T)</span></div>
+      <div class="station-view-controls"><button class="station-toggle" id="station-explode" type="button" aria-pressed="false"><span>⇲</span> Pisahkan komponen</button><button class="station-toggle" id="station-door-toggle" type="button" aria-pressed="true"><span>↙</span> Tutup pintu untuk melihat bagian dalam</button><span class="approx-dim">Konsep ± 100 × 52 × 200 cm</span></div>
     </div>
     <aside class="station-control-card" aria-label="Kontrol dan informasi simulasi stasiun">
       <div class="station-state"><span id="station-led" class="state-led"></span><div><small>STATUS PERANGKAT</small><b id="station-status">Siap · ruang timbang terbuka</b></div></div>
-      <div class="station-flow-controls"><button id="station-borrow" class="flow-btn primary" type="button">▶ Simulasikan pinjam</button><button id="station-return" class="flow-btn" type="button">↩ Simulasikan kembali</button></div>
-      <label class="weight-control" for="station-weight"><span>Berat pada tatakan</span><b><output id="station-weight-value">125</output> g</b></label>
+      <div class="station-flow-controls"><button id="station-borrow" class="flow-btn primary" type="button" title="Jalankan pemeriksaan, buka pintu, lalu ambil wadah">▶ Pinjam wadah</button><button id="station-return" class="flow-btn" type="button" title="Buka pintu pengembalian, lalu letakkan wadah">↩ Kembalikan wadah</button></div>
+      <p class="simulation-help">Pilih transaksi. Saat pintu terbuka, ikuti tombol berikutnya untuk mengambil atau meletakkan wadah.</p>
+      <label class="weight-control" for="station-weight"><span>Atur berat wadah uji</span><b><output id="station-weight-value">125</output> g</b></label>
       <input id="station-weight" type="range" min="0" max="240" value="125" step="1" aria-label="Atur berat wadah simulasi">
-      <div class="weight-range"><span>Kosong ≤ 5 g</span><span>Valid 60–200 g</span></div>
-      <div class="station-stagebox"><div class="stage-title"><b>Alur perangkat</b><span id="station-tx-label">Menunggu transaksi</span></div><ol id="station-stages" class="station-stages"><li data-stage="rfid">Pembaca RFID RC522</li><li data-stage="weight">Load cell + HX711</li><li data-stage="server">Validasi server</li><li data-stage="door">Servo pintu</li><li data-stage="removed">Konfirmasi wadah</li></ol></div>
+      <div class="weight-range"><span>Kosong ≤ 5 g</span><span>Berat valid: 60–200 g</span></div>
+      <p class="simulation-help">Geser ke 60–200 g untuk contoh berhasil; pilih lebih dari 200 g untuk melihat penolakan.</p>
+      <details class="station-more"><summary>Lihat proses sensor</summary><div class="station-stagebox"><div class="stage-title"><b>Urutan pemeriksaan</b><span id="station-tx-label">Menunggu transaksi</span></div><ol id="station-stages" class="station-stages"><li data-stage="rfid">RFID membaca tag wadah</li><li data-stage="weight">Load cell + HX711 menimbang</li><li data-stage="server">Server memvalidasi transaksi</li><li data-stage="door">Servo menggerakkan pintu</li><li data-stage="removed">Sensor memastikan wadah diambil</li></ol></div></details>
       <p class="station-note" id="station-note">Tampilan awal memperlihatkan susunan prototipe: rangkaian di rak atas, wadah pada load cell di ruang bawah, dan servo di kanan bawah.</p>
     </aside>
   </div>
-  <div class="component-strip" aria-label="Pilih komponen untuk melihat fungsi dan pin">
+  <details class="station-components"><summary>Jelajahi komponen stasiun</summary><div class="component-strip" aria-label="Pilih komponen untuk melihat fungsi dan pin">
     <button class="component-chip active" type="button" data-part="esp32"><span class="chip-dot esp"></span>ESP32</button><button class="component-chip" type="button" data-part="rfid"><span class="chip-dot rfid"></span>RFID RC522</button><button class="component-chip" type="button" data-part="scale"><span class="chip-dot scale"></span>Load cell + HX711</button><button class="component-chip" type="button" data-part="servo"><span class="chip-dot servo"></span>Servo pintu</button><button class="component-chip" type="button" data-part="buzzer"><span class="chip-dot buzzer"></span>Buzzer</button>
   </div>
-  <div class="component-detail" id="component-detail" aria-live="polite"><div class="component-number">01</div><div><b id="component-name">ESP32 DevKit</b><p id="component-copy">Pengendali utama: membaca sensor, mengirim event HTTPS ke Supabase, dan menerima perintah transaksi melalui Wi-Fi.</p></div><code id="component-pin">RFID 5/22/18/23/19 · HX711 4/16 · Servo 21 · Buzzer 27</code></div>
-  <p class="model-disclaimer">Model visual mengikuti foto prototipe. Simulasi memakai data contoh dan tidak terhubung langsung ke perangkat.</p>
+  <div class="component-detail" id="component-detail" aria-live="polite"><div class="component-number">01</div><div><b id="component-name">ESP32 DevKit</b><p id="component-copy">Pengendali utama: membaca sensor, mengirim event HTTPS ke Supabase, dan menerima perintah transaksi melalui Wi-Fi.</p></div><code id="component-pin">RFID 5/22/18/23/19 · HX711 4/16 · Servo 21 · Buzzer 27</code></div></details>
+  <p class="model-disclaimer">Posisi komponen direvisi berdasarkan foto prototipe dan bentuk kabinet mengacu pada gambar CAD. Firmware yang ditinjau tidak memakai layar LCD atau sensor inframerah; panel atas pada model hanya area identitas stasiun. Urutan dan ambang simulasi mengikuti ST.ino unggahan (60–200 g; kosong ≤5 g); beberapa jeda waktu di final_ST.ino pada repositori perangkat masih berbeda. Model berjalan lokal dengan data contoh, belum membaca sensor fisik atau Supabase secara langsung.</p>
 </section>
 
 <div class="main">
+<div>
+<div class="info" id="info">
+<div class="ic3 rv"><span class="i" style="background:var(--accSoft);color:var(--acc)" data-i="lock"></span><small>Login</small><b>Akun kampus</b><p>Tanpa unduh aplikasi</p></div>
+<div class="ic3 rv"><span class="i" style="background:var(--ySoft);color:var(--yInk)" data-i="box"></span><small>Kuota</small><b>Maksimal 2 wadah</b><p>Terbuka lagi saat wadah dikembalikan</p></div>
+<div class="ic3 rv"><span class="i" style="background:var(--gSoft);color:var(--g)" data-i="check"></span><small>Pengembalian</small><b>Berat 60-200 g</b><p>Tag terdaftar dan berat sesuai</p></div>
+</div>
+
+<div id="panel">
+<div class="tablist" role="tablist" aria-label="Informasi">
+<button role="tab" id="t1" aria-selected="true" aria-controls="p1">Tentang</button>
+<button role="tab" id="t2" aria-selected="false" aria-controls="p2">Cara kerja</button>
+<button role="tab" id="t3" aria-selected="false" aria-controls="p3">Aturan</button>
+<button role="tab" id="t4" aria-selected="false" aria-controls="p4">Stasiun</button>
+</div>
+
+<div class="tp" id="p1" role="tabpanel" aria-labelledby="t1">
+<p>Stasiun Wadah Pintar adalah stasiun peminjaman dan pengembalian wadah makan di kampus. Setiap wadah punya tag RFID dengan nomor seri sendiri, jadi peminjaman tercatat per wadah.</p>
+<p>Petunjuk transaksi muncul di HP lewat website ini: login dengan akun kampus, scan QR stasiun, lalu pilih pinjam atau kembalikan. Firmware ESP32 yang ditinjau tidak memakai layar elektronik.</p>
+<ul class="hl">
+<li><span class="i" data-i="check"></span><span><b>Bebas sentuh.</b> Sensor di dalam stasiun membaca wadah otomatis.</span></li>
+<li><span class="i" data-i="check"></span><span><b>Anti antrean.</b> QR mengunci stasiun untuk satu pengguna per waktu.</span></li>
+<li><span class="i" data-i="check"></span><span><b>Pengingat.</b> Dikirim lewat email, dan muncul pemberitahuan singkat di menu utama jika wadah belum kembali.</span></li>
+</ul>
+</div>
+
+<div class="tp" id="p2" role="tabpanel" aria-labelledby="t2" hidden>
+<div class="seg" role="tablist" aria-label="Pilih alur"><button role="tab" id="s1" aria-selected="true" aria-controls="q1">Pinjam</button><button role="tab" id="s2" aria-selected="false" aria-controls="q2">Kembalikan</button></div>
+<ol class="tl" id="q1" role="tabpanel" aria-labelledby="s1">
+<li data-n="1"><h4>Masuk dan scan</h4><p>Login dengan akun kampus, lalu scan QR di stasiun.</p></li>
+<li data-n="2"><h4>Pilih Pinjam wadah</h4><p>Pintu stasiun terbuka otomatis.</p></li>
+<li data-n="3"><h4>Ambil satu wadah</h4><p>Stasiun mencatat wadahmu sendiri. Tidak perlu menempelkan apa pun.</p></li>
+<li data-n="4"><h4>Selesai</h4><p>Pintu menutup dan kuota berkurang satu.</p></li>
+</ol>
+<ol class="tl" id="q2" role="tabpanel" aria-labelledby="s2" hidden>
+<li data-n="1"><h4>Masuk dan scan</h4><p>Login dengan akun kampus, lalu scan QR di stasiun.</p></li>
+<li data-n="2"><h4>Pilih Kembalikan wadah</h4><p>Pintu slot pengembalian terbuka.</p></li>
+<li data-n="3"><h4>Letakkan wadah</h4><p>Taruh wadah yang kosong dan bersih di slot.</p></li>
+<li data-n="4"><h4>Dicek otomatis</h4><p>Kalau cocok, kuota pulih. Kalau tidak, HP menjelaskan penyebabnya.</p></li>
+</ol>
+</div>
+
+<div class="tp" id="p3" role="tabpanel" aria-labelledby="t3" hidden>
+<div class="rg">
+<div class="rc"><h4>Kuota</h4><b>2 wadah</b><p>Kembalikan satu wadah untuk membuka kuota lagi.</p></div>
+<div class="rc"><h4>Berat wadah</h4><b>60-200 g</b><p>Keputusan server menentukan alur pintu: peminjaman yang ditolak tetap tertutup, pengembalian yang ditolak tetap terbuka.</p></div>
+<div class="rc"><h4>Satu pengguna</h4><b>1 per waktu</b><p>QR mengunci stasiun untukmu, jadi data tidak tertukar saat kantin ramai.</p></div>
+<div class="rc"><h4>Terlambat</h4><b>Kuota dikunci</b><p>Pengingat dikirim lewat email. Kuota terbuka lagi setelah wadah dikembalikan.</p></div>
+</div>
+</div>
+
+<div class="tp" id="p4" role="tabpanel" aria-labelledby="t4" hidden>
+<div class="sp"><span class="av" style="background:#4285F4">R</span><div><h4>Tag dan pembaca RFID</h4><p>Setiap wadah punya tag dengan nomor seri sendiri. Pembaca di dalam stasiun mengenalinya otomatis.</p></div></div>
+<div class="sp"><span class="av" style="background:#EA4335">L</span><div><h4>Load cell</h4><p>Mengukur berat wadah. Firmware menerima 60–200 g dan menganggap tatakan kosong pada ≤5 g.</p></div></div>
+
+<div class="sp"><span class="av" style="background:#34A853">S</span><div><h4>Servo dan ESP32</h4><p>ESP32 mengirim data lewat Wi-Fi/HTTPS ke Supabase. Servo continuous menggerakkan pintu dan buzzer memberi tanda hasil.</p></div></div>
+<div class="sp"><span class="av" style="background:#1A73E8">F</span><div><h4>Supabase</h4><p>Server memvalidasi transaksi; ESP32 hanya melaporkan tag dan berat lalu menjalankan keputusan server.</p></div></div>
+</div>
+</div>
+
+<div class="faq" id="tanya">
+<h2>Pertanyaan umum</h2>
+<details><summary>Perlu memasang aplikasi?</summary><p>Tidak. Buka website ini di browser HP, lalu masuk dengan akun kampus.</p></details>
+<details><summary>Bagaimana kalau stasiun sedang dipakai?</summary><p>HP menampilkan "Stasiun sedang digunakan". Tunggu sebentar sampai transaksi sebelumnya selesai, lalu scan ulang.</p></details>
+<details><summary>Kenapa pengembalian saya ditolak?</summary><p>Layar menyebutkan penyebabnya: wadah tidak terdaftar, berat tidak sesuai, bukan wadah milikmu, atau sensor gagal membaca. Pintu tetap terbuka, jadi perbaiki masalahnya lalu tekan Coba lagi.</p></details>
+<details><summary>Apa yang terjadi kalau saya terlambat?</summary><p>Kamu mendapat email pengingat sebelum jatuh tempo. Jika sudah terlambat, muncul pemberitahuan di menu utama dan kuota dikunci sampai wadahnya dikembalikan.</p></details>
+<details><summary>Bisakah meminjam lebih dari dua wadah?</summary><p>Tidak, batasnya dua wadah per pengguna. Kembalikan satu wadah untuk membuka kuota lagi.</p></details>
+</div>
+</div>
+
 <aside class="side" id="demo">
-<div class="demo-heading"><span class="station-kicker">DEMO</span><h2>Simulasi aplikasi</h2></div>
+<h2>Coba langsung</h2>
 <div class="phone"><div class="scr" id="scr" aria-live="polite"></div></div>
-<details class="screen-jump"><summary>Pilih layar demo</summary><div class="chips" id="chips" role="group" aria-label="Lompat ke layar"></div></details>
+<div class="chips" id="chips" role="group" aria-label="Lompat ke layar"></div>
+<p class="note">Ketuk tombol di dalam HP, atau lompat langsung ke layar yang ingin dilihat.</p>
 </aside>
 </div>
 </main>
-<footer class="ft"><span class="brand" style="font-size:16px"><img class="brand-logo" src="assets/arcid-logo.png" alt="">ARCID</span><span>Stasiun peminjaman wadah · SLB-001</span></footer>
+<footer class="ft"><span class="brand" style="font-size:18px"><img class="brand-logo" src="assets/arcid-logo.png" alt="">ARCID</span><span>Prototipe Stasiun Peminjaman Wadah · SLB-001.</span></footer>
 </div>
 <script>
 const $=s=>document.querySelector(s);
 const N={intro:'Intro',login:'Masuk',scan:'Scan QR',busy:'Sibuk',dash:'Menu',borrow:'Ambil',ret:'Kembalikan',verify:'Verifikasi',ok:'Berhasil',err:'Error',timeout:'Sesi habis',late:'Menu terlambat'};
 const st={cur:'login',loans:[{id:'WD-042',d:'10 Okt 2026'}],max:2,left:15,tm:null,tt:[],msg:'Berat tidak sesuai (240 g, batas 60-200 g)',kind:'ret',rid:'WD-042'};
 const later=(f,ms)=>st.tt.push(setTimeout(f,ms));
-const P={check:'<path d="M5 13l4 4L19 7"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',box:'<rect x="4" y="8" width="16" height="11" rx="2"/><path d="M8 8V6a4 4 0 018 0v2"/>',lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>',qr:'<path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2v2h-2zM18 18h2v2h-2zM14 18h2M18 14h2"/>',out:'<path d="M4 13v6a2 2 0 002 2h12a2 2 0 002-2v-6"/><path d="M12 15V3M8 7l4-4 4 4"/>',inn:'<path d="M4 13v6a2 2 0 002 2h12a2 2 0 002-2v-6"/><path d="M12 3v12M8 11l4 4 4-4"/>'};
+const P={check:'<path d="M5 13l4 4L19 7"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',box:'<rect x="4" y="8" width="16" height="11" rx="2"/><path d="M8 8V6a4 4 0 018 0v2"/>',lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>',qr:'<path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2v2h-2zM18 18h2v2h-2zM14 18h2M18 14h2"/>'};
 const ic=(n,c='')=>`<div class="ic ${c}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${P[n]}</svg></div>`;
-const svg=n=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]}</svg>`;
 const btn=(a,t,alt,dis)=>`<button class="pb ${alt?'alt':''}" data-a="${a}" ${dis?'disabled':''}>${t}</button>`;
 const dots=()=>`<div class="dots">${Array.from({length:st.max},(_,i)=>`<i class="${i<st.loans.length?'f':''}"></i>`).join('')}</div>`;
 const LOGO='assets/arcid-logo.png';
-const intro=()=>`<div class="intro arcid-intro"><div class="arcid-stage" aria-hidden="true"><img class="arcid-logo" src="${LOGO}" alt=""><span class="arcid-shadow"></span></div><h2 class="arcid-name" aria-label="ARCID">${[...'ARCID'].map((c,i)=>`<span style="--i:${i}">${c}</span>`).join('')}</h2></div>`;
+const intro=()=>`<div class="intro arcid-intro"><div class="arcid-stage"><img class="arcid-logo" src="${LOGO}" alt=""><span class="arcid-shadow"></span></div><h2 class="arcid-name" aria-label="ARCID">${[...'ARCID'].map((c,i)=>`<span style="--i:${i}">${c}</span>`).join('')}</h2></div>`;
 const LB='<svg viewBox="0 0 96 64" width="96" height="64" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><rect x="6" y="18" width="84" height="40" rx="8"/><path d="M6 30h84M30 18v-6a4 4 0 014-4h28a4 4 0 014 4v6"/></svg>';
 const V={
 intro:()=>intro(),
-login:()=>`<div class="lg-top"><img src="${LOGO}" alt=""><span>ARCID</span></div><h3>Masuk ke akunmu</h3><p class="sub">Pinjam atau kembalikan wadah melalui stasiun.</p><div class="grow"></div>${btn('scan','Masuk dengan Google')}<p class="sub ctr" style="margin-top:10px;text-align:center">Simulasi demo · tanpa akun nyata</p>`,
-scan:()=>`<h3>Scan QR stasiun</h3><p class="sub">Pindai QR untuk memulai.</p><div class="view" aria-hidden="true"><i></i></div><p class="sub" style="text-align:center">Arahkan kamera ke QR di stasiun.</p><div class="grow"></div>${btn('free','Simulasi: stasiun bebas')}${btn('busy','Simulasi: stasiun sibuk',1)}${btn('login','Batal',1)}`,
+login:()=>`<div class="ctr"><img class="lg" src="${LOGO}" alt="Logo ARCID"><h3>ARCID</h3><p class="sub">Pinjam dan kembalikan wadah makan tanpa antre.</p></div><div class="grow"></div>${btn('scan','Masuk dengan akun kampus')}<p class="sub ctr" style="margin-top:10px;text-align:center">Gunakan akun kampus untuk demo</p>`,
+scan:()=>`<h3>Scan QR stasiun</h3><p class="sub">Pindai QR untuk memulai.</p><div class="view" aria-hidden="true"><i></i></div><p class="sub" style="text-align:center">Arahkan kamera ke QR di stasiun.</p><div class="grow"></div>${btn('free','Contoh: stasiun tersedia')}${btn('busy','Contoh: stasiun sedang dipakai',1)}${btn('login','Batalkan')}`,
 busy:()=>`<div class="ctr">${ic('clock','w')}<h3>Stasiun sedang digunakan</h3><p class="sub">Mohon antre. Stasiun siap setelah transaksi pengguna sebelumnya selesai.</p></div><div class="grow"></div>${btn('scan','Scan ulang')}${btn('login','Kembali',1)}`,
-dash:()=>{const f=st.loans.length>=st.max||st.late,n=st.loans.length;return `<div class="who-row"><span class="av">B</span><div><b>Pengguna demo</b><span>ARCID · SLB-001</span></div></div>${st.late?'<div class="alert">Ada wadah yang belum dikembalikan. Kuota dikunci sementara.</div>':''}<div class="stn on"><span class="dot"></span><div><b>Terhubung ke SLB-001</b><span>Pilih transaksi</span></div></div><div class="acts"><button class="act act-p act-out" data-a="borrow"${f?' disabled':''}>${svg('out')}<b>Pinjam</b><span>${f?'Kuota penuh':'Ambil wadah'}</span></button><button class="act act-in" data-a="ret"${n?'':' disabled'}>${svg('inn')}<b>Kembalikan</b><span>${n?`${n} wadah dipinjam`:'Belum ada pinjaman'}</span></button></div><div class="quota"><div class="q-top"><span>Kuota pinjam</span><b>${n}<em> / ${st.max}</em></b></div><div class="q-bar"><i style="width:${Math.min(100,Math.round(n/st.max*100))}%"></i></div></div><h3 class="sec">Pinjaman aktif</h3>${st.loans.length?`<ul class="loans">${st.loans.map((l,i)=>`<li class="loan"><span class="loan-ic">${svg('box')}</span><div><b>Wadah ${i+1}</b><span>Dipinjam ${l.d}</span></div><em class="tag">Aktif</em></li>`).join('')}</ul>`:'<div class="empty">Belum ada wadah yang dipinjam.</div>'}`},
+dash:()=>{const f=st.loans.length>=st.max||st.late,n=st.loans.length;return `<h3>Menu utama</h3>${st.late?'<div class="alert"><b>Ada wadah yang belum dikembalikan.</b><br>Kuota peminjaman dikunci sampai wadah dikembalikan. Pengingat juga dikirim ke email kampus kamu.</div>':''}<div class="box"><b>NIM 2021xxxx</b><br><span class="sub">Budi Santoso</span></div><div class="box"><b>Kuota: ${n}/${st.max} wadah dipinjam</b>${dots()}</div>${btn('borrow','Pinjam wadah','',f)}${f&&!st.late?'<p class="sub" style="margin-top:6px">Kuota penuh. Kembalikan wadah dulu.</p>':''}${btn('ret','Kembalikan wadah',1,!n)}<p style="font-weight:800;margin:16px 0 0">Wadah yang dipinjam</p>${st.loans.map((l,i)=>`<div class="box b"><b>Wadah ${i+1}</b><br><span class="sub">dipinjam ${l.d}</span></div>`).join('')||'<p class="sub">Belum ada wadah yang dipinjam.</p>'}`},
 borrow:()=>`<div class="ctr"><h3>Ambil wadah</h3><p class="sub">Pintu dispenser terbuka. Ambil 1 wadah dari slot.</p></div><div class="slot">${LB}</div><div class="box" id="det">Mendeteksi wadah...</div><div class="grow"></div>${btn('fin','Selesai','',1).replace('<button','<button id="fin"')}`,
-ret:()=>{st.rid=(st.loans[0]||{id:'WD-042'}).id;return `<h3>Kembalikan</h3><p class="sub">Letakkan wadah di slot pengembalian.</p><div class="slot">${LB}</div><div class="box">Menunggu wadah...</div><div class="grow"></div>${btn('verify','Simulasi: wadah sudah di slot')}${btn('heavy','Simulasi: berat tidak sesuai',1)}${btn('dash','Batal',1)}`},
+ret:()=>{st.rid=(st.loans[0]||{id:'WD-042'}).id;return `<h3>Kembalikan</h3><p class="sub">Letakkan wadah di slot pengembalian.</p><div class="slot">${LB}</div><div class="box">Menunggu wadah...</div><div class="grow"></div>${btn('verify','Letakkan wadah · simulasi')}${btn('heavy','Coba berat tidak sesuai · 240 g',1)}${btn('dash','Batalkan pengembalian',1)}`},
 verify:()=>`<h3>Memverifikasi</h3><p class="sub">Pemeriksaan otomatis</p><div class="box"><b>Wadah</b> sedang diperiksa</div><div class="chk" id="c1">RFID terbaca</div><div class="chk" id="c2">Berat ${$('#station-weight')?.value||195} g</div><div class="chk" id="c3">Posisi tepat</div><div class="bar"><i id="pg"></i></div><p class="sub" style="text-align:center;margin-top:8px">Memproses...</p>`,
 ok:()=>`<div class="ctr">${ic('check')}<h3>${st.kind==='ret'?'Pengembalian berhasil':'Peminjaman berhasil'}</h3></div><div class="box b" style="text-align:center">Kuota diperbarui<br><b>${st.loans.length}/${st.max} wadah dipinjam</b></div><div class="grow"></div>${btn('dash','Kembali ke menu')}`,
 err:()=>`<div class="ctr">${ic('x','e')}<h3>Terjadi kesalahan</h3></div><div class="box" style="background:var(--errbg);color:var(--err);font-weight:600">${st.msg}</div><p class="sub" style="margin-top:12px">Kemungkinan penyebab lain: wadah tidak terdaftar, bukan wadah Anda, atau sensor gagal membaca.</p><div class="grow"></div>${btn('ret','Coba lagi')}${btn('dash','Batal',1)}`,
@@ -380,13 +401,13 @@ const io=new IntersectionObserver(es=>es.forEach(x=>{const el=x.target;if(x.isIn
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 // Progress scroll, bayangan header, parallax hero, penanda menu aktif
 const hd=$('.top'),shp=[...document.querySelectorAll('.shp')],htx=$('.hero .txt'),lk=[...document.querySelectorAll('.top nav a:not(.btn)')],sc=lk.map(a=>$(a.getAttribute('href')));let tk=0;
-function onScroll(){tk=0;const y=scrollY;hd.classList.toggle('stuck',y>8);
+function onScroll(){tk=0;const y=scrollY,h=document.documentElement.scrollHeight-innerHeight;hd.classList.toggle('stuck',y>8);
 if(!RM&&y<1200){shp.forEach((e,i)=>e.style.translate=`0 ${-(y*(.06+i*.04)).toFixed(1)}px`);htx.style.translate=`0 ${(y*.1).toFixed(1)}px`}
 let c=-1;sc.forEach((e,i)=>{if(e&&e.getBoundingClientRect().top<innerHeight*.4)c=i});lk.forEach((a,i)=>a.classList.toggle('act',i===c))}
 addEventListener('scroll',()=>{if(!tk)tk=requestAnimationFrame(onScroll)},{passive:true});addEventListener('resize',onScroll);onScroll();
 const SP=$('#splash');let sp;
 function endSplash(){clearTimeout(sp);SP.classList.add('out');document.body.style.overflow='';setTimeout(()=>{SP.hidden=true;SP.innerHTML=''},800)}
-function splash(){let shown=false;try{shown=sessionStorage.getItem('arcid-intro-shown')==='1'}catch{}if(shown||matchMedia('(prefers-reduced-motion:reduce)').matches){SP.hidden=true;SP.innerHTML='';document.body.style.overflow='';return}try{sessionStorage.setItem('arcid-intro-shown','1')}catch{}SP.hidden=false;SP.classList.remove('out');SP.innerHTML=intro();document.body.style.overflow='hidden';sp=setTimeout(endSplash,4100)}
+function splash(){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;SP.hidden=false;SP.classList.remove('out');SP.innerHTML=intro()+'<button class="skip" type="button">Lewati intro</button>';document.body.style.overflow='hidden';SP.querySelector('.skip').onclick=endSplash;sp=setTimeout(endSplash,4700)}
 const mb=$('#mb'),nv=$('#nv');
 const closeNav=()=>{nv.classList.remove('open');mb.setAttribute('aria-expanded','false');mb.setAttribute('aria-label','Buka menu')};
 mb.onclick=e=>{e.stopPropagation();const o=nv.classList.toggle('open');mb.setAttribute('aria-expanded',String(o));mb.setAttribute('aria-label',o?'Tutup menu':'Buka menu')};
