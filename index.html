@@ -102,10 +102,14 @@ details[open] summary:after{transform:rotate(45deg)}
 details p{padding:0 22px 20px;color:var(--mute);max-width:64ch}
 .phone{position:relative;width:min(312px,100%);height:640px;background:var(--surf);border:9px solid #202124;border-radius:44px;overflow:hidden;box-shadow:0 14px 34px rgba(32,33,36,.3)}
 .phone:before{content:"";position:absolute;top:8px;left:50%;width:78px;height:20px;border-radius:12px;background:#202124;transform:translateX(-50%);z-index:5}
-.scr{height:100%;padding:46px 18px 18px;display:flex;flex-direction:column;font-size:14px;line-height:1.45;overflow:auto;color:var(--ink);background:var(--surf)}
+.scr{height:100%;padding:46px 18px 18px;display:flex;flex-direction:column;font-size:14px;line-height:1.45;overflow:auto;color:var(--ink);background:var(--surf);transition:opacity .16s ease,transform .16s ease}
+.scr.switching{opacity:0;transform:translateY(5px);pointer-events:none}
 .scr[data-s=ok]{background:var(--gSoft)}.scr[data-s=err]{background:var(--rSoft)}.scr[data-s=busy],.scr[data-s=timeout]{background:var(--ySoft)}
 .scr[data-s=intro]{background:#1E1E1E;padding:0}
 .scr[data-s=ok] .box,.scr[data-s=err] .box,.scr[data-s=busy] .box,.scr[data-s=timeout] .box{background:var(--surf)}
+.scr[data-s=intro]{overflow:hidden;overscroll-behavior:contain}
+.scr[data-s=intro] .arcid-intro{width:100%;height:100%;min-height:0;align-items:center;justify-content:center;gap:0}
+.scr[data-s=intro] .arcid-name{width:100%;justify-content:center;text-align:center;white-space:nowrap;margin:.85em 0 0}
 .scr h3{font-size:25px;font-weight:600}
 .lg{display:block;width:104px;height:104px;object-fit:contain;margin:30px auto 14px}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .lg{filter:invert(1)}}
@@ -137,6 +141,12 @@ details p{padding:0 22px 20px;color:var(--mute);max-width:64ch}
 .chips button{position:relative;overflow:hidden;font:600 13px "Plus Jakarta Sans",sans-serif;min-height:34px;padding:0 13px;border-radius:10px;border:1px solid var(--line);background:var(--surf);color:var(--mute);cursor:pointer;transition:background .2s,color .2s}
 .chips button:hover{background:var(--accSoft)}
 .chips button[aria-pressed="true"]{background:var(--accSoft);border-color:var(--acc);color:var(--acc)}
+.screen-jump{width:min(100%,360px)}
+.screen-jump summary{min-height:42px;padding:0 14px;border:1px solid var(--line);border-radius:12px;background:var(--surf);font-size:13px}
+.screen-jump summary:after{font-size:20px}
+.screen-jump[open] summary{border-radius:12px 12px 0 0}
+.screen-jump .chips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:10px;border:1px solid var(--line);border-top:0;border-radius:0 0 12px 12px;background:var(--surf)}
+.screen-jump .chips button{min-width:0;padding:0 6px;font-size:11px}
 .note{font-size:13px;color:var(--mute);text-align:center}
 .ft{border-top:1px solid var(--line);margin-top:72px;padding:28px 0 44px;color:var(--mute);font-size:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
 #splash{position:fixed;inset:0;z-index:100;background:#1E1E1E;font-size:clamp(13px,4.6vw,22px);clip-path:circle(150% at 50% 50%);transition:clip-path .8s cubic-bezier(.7,0,.2,1)}
@@ -149,7 +159,7 @@ details p{padding:0 22px 20px;color:var(--mute);max-width:64ch}
 .arcid-stage{position:relative;width:6em;height:6em;display:grid;place-items:center;flex:none;animation:arcid-drop 1.05s cubic-bezier(.2,.9,.3,1.2) both}
 .arcid-logo{width:100%;height:100%;object-fit:contain;filter:invert(1) drop-shadow(0 0 1em rgba(255,255,255,.22))}
 .arcid-shadow{position:absolute;bottom:-.22em;width:64%;height:.12em;border-radius:50%;background:rgba(255,255,255,.35);filter:blur(.16em);animation:arcid-shadow .9s .12s ease-out both}
-.arcid-name{display:flex;gap:.06em;margin-top:.85em;font:700 1.9em/1 Sora,"Plus Jakarta Sans",sans-serif;letter-spacing:.04em}
+.arcid-name{display:flex;justify-content:center;width:100%;gap:.06em;margin:.85em 0 0;text-align:center;white-space:nowrap;font:700 1.9em/1 Outfit,"Plus Jakarta Sans",sans-serif;letter-spacing:.04em}
 .arcid-name span{display:inline-block;opacity:0;transform:translateY(.45em);animation:arcid-letter .45s calc(.8s + var(--i)*.055s) cubic-bezier(.2,.7,.2,1) forwards}
 @keyframes arcid-drop{0%{opacity:0;transform:translateY(-1.4em) scale(.72)}65%{opacity:1;transform:translateY(.12em) scale(1.04)}82%{transform:translateY(-.06em) scale(.99)}100%{transform:none}}
 @keyframes arcid-shadow{from{transform:scale(.35);opacity:0}to{transform:scale(1);opacity:.7}}
@@ -172,7 +182,7 @@ body{overflow-x:clip}
 .tr{display:flex;align-items:center;gap:8px}.tr .btn.sm{margin-left:0}
 .mb{display:none}
 @media(min-width:1100px){.side .phone{height:clamp(520px,calc(100dvh - 250px),640px)}}
-@media(min-width:700px) and (max-width:1099px){.side{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"ph hd" "ph ch" "ph nt";grid-template-rows:auto auto 1fr;gap:12px 32px;align-items:start;padding:24px}.side h2{grid-area:hd;align-self:end;padding:0}.side .phone{grid-area:ph}.side .chips{grid-area:ch;justify-content:flex-start}.side .note{grid-area:nt;text-align:left}}
+@media(min-width:700px) and (max-width:1099px){.side{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"ph hd" "ph ch" "ph nt";grid-template-rows:auto auto 1fr;gap:12px 32px;align-items:start;padding:24px}.side h2{grid-area:hd;align-self:end;padding:0}.side .phone{grid-area:ph}.side .screen-jump{grid-area:ch}.side .screen-jump .chips{justify-content:flex-start}.side .note{grid-area:nt;text-align:left}}
 @media(max-width:1000px){.mb{display:inline-flex}.top nav{position:absolute;top:100%;left:0;right:0;display:none;flex-direction:column;align-items:stretch;gap:2px;margin-top:6px;padding:8px;background:var(--surf);border:1px solid var(--line);border-radius:20px;box-shadow:0 12px 28px rgba(60,64,67,.2)}.top nav.open{display:flex}.top nav a:not(.btn){padding:12px 16px;border-radius:14px}}
 @media(max-width:480px){.tr .btn.sm{display:none}.hero{padding:36px 20px;border-radius:24px;min-height:0}.wrap{padding:0 14px}.hero .btns .btn{flex:1 1 100%}.dkb,.cta{border-radius:24px}}
 @media(pointer:coarse){.chips button{min-height:42px}.tablist button{min-height:56px}}
@@ -339,8 +349,8 @@ body{overflow-x:clip}
 <aside class="side" id="demo">
 <h2>Coba langsung</h2>
 <div class="phone"><div class="scr" id="scr" aria-live="polite"></div></div>
-<div class="chips" id="chips" role="group" aria-label="Lompat ke layar"></div>
-<p class="note">Ketuk tombol di dalam HP, atau lompat langsung ke layar yang ingin dilihat.</p>
+<details class="screen-jump"><summary>Pilih layar demo</summary><div class="chips" id="chips" role="group" aria-label="Pilih layar simulasi"></div></details>
+<p class="note">Gunakan tombol pada layar HP. Menu pilihan layar hanya untuk melihat skenario tertentu.</p>
 </aside>
 </div>
 </main>
@@ -349,7 +359,7 @@ body{overflow-x:clip}
 <script>
 const $=s=>document.querySelector(s);
 const N={intro:'Intro',login:'Masuk',scan:'Scan QR',busy:'Sibuk',dash:'Menu',borrow:'Ambil',ret:'Kembalikan',verify:'Verifikasi',ok:'Berhasil',err:'Error',timeout:'Sesi habis',late:'Menu terlambat'};
-const st={cur:'login',loans:[{id:'WD-042',d:'10 Okt 2026'}],max:2,left:15,tm:null,tt:[],msg:'Berat tidak sesuai (240 g, batas 60-200 g)',kind:'ret',rid:'WD-042'};
+const st={cur:'login',loans:[{id:'WD-042',d:'10 Okt 2026'}],max:2,left:15,tm:null,tt:[],screenTimer:null,msg:'Berat tidak sesuai (240 g, batas 60-200 g)',kind:'ret',rid:'WD-042'};
 const later=(f,ms)=>st.tt.push(setTimeout(f,ms));
 const P={check:'<path d="M5 13l4 4L19 7"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',box:'<rect x="4" y="8" width="16" height="11" rx="2"/><path d="M8 8V6a4 4 0 018 0v2"/>',lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>',qr:'<path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2v2h-2zM18 18h2v2h-2zM14 18h2M18 14h2"/>'};
 const ic=(n,c='')=>`<div class="ic ${c}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${P[n]}</svg></div>`;
@@ -373,10 +383,10 @@ timeout:()=>`<div class="ctr">${ic('clock','w')}<h3>Sesi berakhir</h3><p class="
 late:()=>{st.late=true;return V.dash()}
 };
 const E={
-intro(){later(()=>go('login'),4300)},
+intro(){later(()=>go('login'),3200)},
 
 borrow(){later(()=>{const weight=Number($('#station-weight')?.value??125);if(weight<60||weight>200){st.msg=`Berat wadah tidak sesuai (${weight} g, batas 60-200 g)`;window.station3D?.setStage('rejected');go('err');return}$('#det').innerHTML='<b>Wadah terdeteksi</b>';$('#fin').disabled=false},1800)},
-verify(){window.station3D?.setStage('reading');[['c1',33],['c2',66],['c3',100]].forEach(([id,w],i)=>later(()=>{$('#'+id).classList.add('on');$('#pg').style.width=w+'%'},600+i*600));const weight=Number($('#station-weight')?.value??195);if(weight<60||weight>200){later(()=>{st.msg=`Berat tidak sesuai (${weight} g, batas 60-200 g)`;window.station3D?.setStage('rejected');go('err')},2100);return}later(()=>{st.loans=st.loans.filter(l=>l.id!==st.rid);st.late=false;st.kind='ret';window.station3D?.completeReturn(true);go('ok')},2700)}
+verify(){window.station3D?.setStage('reading');[['c1',33],['c2',66],['c3',100]].forEach(([id,w],i)=>later(()=>{$('#'+id).classList.add('on');$('#pg').style.width=w+'%'},600+i*600));const weight=Number($('#station-weight')?.value??195);if(weight<60||weight>200){later(()=>{st.msg=`Berat tidak sesuai (${weight} g, batas 60-200 g)`;window.station3D?.setStage('rejected');go('err')},2100);return}later(()=>{st.loans=st.loans.filter(l=>l.id!==st.rid);st.late=false;st.kind='ret';go('ok')},2700)}
 };
 const A={
 scan:()=>go('scan'),login:()=>go('login'),busy:()=>go('busy'),free:()=>go('dash'),dash:()=>go('dash'),borrow:()=>go('borrow'),ret:()=>go('ret'),verify:()=>go('verify'),
@@ -384,7 +394,7 @@ heavy:()=>{st.msg='Berat tidak sesuai (240 g, batas 60-200 g)';const slider=$('#
 fin:()=>{st.loans.push({id:'WD-089',d:'30 Okt 2026'});st.kind='borrow';window.station3D?.completeBorrow();go('ok')}
 };
 function clr(){clearInterval(st.tm);st.tt.forEach(clearTimeout);st.tt=[]}
-function go(n){clr();st.cur=n;$('#scr').dataset.s=n;$('#scr').innerHTML=V[n]();document.querySelectorAll('#chips button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.n===n));if(E[n])E[n]();window.station3D?.setFromPhone(n,st.kind)}
+function go(n){clr();clearTimeout(st.screenTimer);const scr=$('#scr');const render=()=>{st.cur=n;scr.dataset.s=n;scr.innerHTML=V[n]();document.querySelectorAll('#chips button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.n===n));if(E[n])E[n]();window.station3D?.setFromPhone(n,st.kind);requestAnimationFrame(()=>scr.classList.remove('switching'))};if(!scr.innerHTML||RM)scr.classList.remove('switching'),render();else{scr.classList.add('switching');st.screenTimer=setTimeout(render,160)}}
 window.stationPhoneNavigate=n=>go(n);
 $('#scr').addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(b&&!b.disabled)A[b.dataset.a]()});
 $('#chips').innerHTML=Object.entries(N).map(([k,v])=>`<button data-n="${k}">${v}</button>`).join('');
@@ -407,7 +417,7 @@ let c=-1;sc.forEach((e,i)=>{if(e&&e.getBoundingClientRect().top<innerHeight*.4)c
 addEventListener('scroll',()=>{if(!tk)tk=requestAnimationFrame(onScroll)},{passive:true});addEventListener('resize',onScroll);onScroll();
 const SP=$('#splash');let sp;
 function endSplash(){clearTimeout(sp);SP.classList.add('out');document.body.style.overflow='';setTimeout(()=>{SP.hidden=true;SP.innerHTML=''},800)}
-function splash(){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;SP.hidden=false;SP.classList.remove('out');SP.innerHTML=intro()+'<button class="skip" type="button">Lewati intro</button>';document.body.style.overflow='hidden';SP.querySelector('.skip').onclick=endSplash;sp=setTimeout(endSplash,4700)}
+function splash(){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;SP.hidden=false;SP.classList.remove('out');SP.innerHTML=intro()+'<button class="skip" type="button">Lewati intro</button>';document.body.style.overflow='hidden';SP.querySelector('.skip').onclick=endSplash;sp=setTimeout(endSplash,3500)}
 const mb=$('#mb'),nv=$('#nv');
 const closeNav=()=>{nv.classList.remove('open');mb.setAttribute('aria-expanded','false');mb.setAttribute('aria-label','Buka menu')};
 mb.onclick=e=>{e.stopPropagation();const o=nv.classList.toggle('open');mb.setAttribute('aria-expanded',String(o));mb.setAttribute('aria-label',o?'Tutup menu':'Buka menu')};
