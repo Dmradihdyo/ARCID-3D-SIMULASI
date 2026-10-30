@@ -248,7 +248,7 @@ function setStage(stage) {
 function startBorrow(fromControl = true) {
   if (anim.busy || anim.phase === 'waiting_pickup') { if (anim.phase === 'waiting_pickup') completeBorrow(); return; }
   clearSteps(); anim.busy = true; anim.type = 'borrow'; anim.phase = 'reading'; anim.container = true; returnBin.visible = true; returnBin.position.set(0, .17, .01); anim.returnMove = 1; anim.doorTarget = 0;
-  $('#station-return').textContent = '↩ Simulasikan kembali';
+  $('#station-return').textContent = '↩ Kembalikan wadah';
   stageUI('rfid'); txLabel.textContent = 'Peminjaman · mulai'; setStatus('Membaca wadah di dalam stasiun', 'busy');
   note.textContent = 'Pintu tetap tertutup saat tag dan berat wadah diperiksa. Rentang valid firmware: 60–200 g.';
   if (fromControl) window.stationPhoneNavigate?.('borrow');
@@ -265,7 +265,7 @@ function startBorrow(fromControl = true) {
     later(() => {
       stageUI('door'); txLabel.textContent = 'Servo membuka pintu'; anim.doorTarget = 1.25; anim.phase = 'waiting_pickup'; anim.busy = false;
       setStatus('Pintu terbuka · wadah siap diambil', 'busy');
-      note.textContent = 'Setelah server menyetujui tag dan berat, servo membuka pintu. Tekan “Ambil wadah” di panel ini atau “Selesai” di simulasi HP.';
+      note.textContent = 'Pemeriksaan berhasil. Ambil wadah dari ruang bawah, lalu tekan “Ambil wadah” untuk menutup pintu dan mencatat transaksi.';
       $('#station-borrow').textContent = '✓ Ambil wadah';
     }, 520);
   }, 1120);
@@ -280,7 +280,7 @@ function completeBorrow() {
   later(() => {
     stageUI(''); txLabel.textContent = 'Pinjaman tercatat'; setStatus('Transaksi selesai · pintu tertutup');
     note.textContent = 'Wadah yang diambil tercatat setelah sensor beban memastikan tatakan kosong.';
-    anim.busy = false; anim.phase = 'done'; $('#station-borrow').textContent = '▶ Simulasikan pinjam';
+    anim.busy = false; anim.phase = 'done'; $('#station-borrow').textContent = '▶ Pinjam wadah';
   }, 1450);
 }
 function startReturn(fromControl = true) {
@@ -306,8 +306,8 @@ function performReturn() {
     anim.trayY = 0; stageUI('server');
     if (weight < 60 || weight > 200) {
       txLabel.textContent = 'Berat di luar rentang'; setStatus('Ditolak · pintu tetap terbuka', 'error');
-      note.textContent = `${weight} g tidak lolos rentang 60–200 g. Stasiun memberi bunyi penolakan dan menjaga pintu terbuka.`;
-      anim.busy = false; anim.phase = 'rejected'; $('#station-return').disabled = false; $('#station-return').textContent = '↻ Coba kembali'; return;
+      note.textContent = `${weight} g tidak lolos rentang 60–200 g. Pengembalian ditolak; pintu tetap terbuka. Atur berat lalu tekan “Coba lagi”.`;
+      anim.busy = false; anim.phase = 'rejected'; $('#station-return').disabled = false; $('#station-return').textContent = '↻ Coba lagi'; return;
     }
     txLabel.textContent = 'Server menyetujui pengembalian';
     later(() => finishReturn(), 520);
@@ -317,7 +317,7 @@ function finishReturn() {
   stageUI('door'); txLabel.textContent = 'Bunyi sukses · pintu menutup'; setStatus('Pengembalian diterima', 'busy');
   note.textContent = 'Server mengesahkan wadah. Buzzer memberi dua bunyi pendek, lalu servo menutup pintu.';
   later(() => { anim.doorTarget = 0; }, 260);
-  later(() => { stageUI(''); txLabel.textContent = 'Pengembalian tercatat'; setStatus('Transaksi selesai · pintu tertutup'); note.textContent = 'Wadah diterima, tercatat di sistem, dan pintu kembali tertutup.'; anim.busy = false; anim.phase = 'done'; $('#station-return').disabled = false; $('#station-return').textContent = '↩ Simulasikan kembali'; }, 980);
+  later(() => { stageUI(''); txLabel.textContent = 'Pengembalian tercatat'; setStatus('Transaksi selesai · pintu tertutup'); note.textContent = 'Wadah diterima, tercatat di sistem, dan pintu kembali tertutup.'; anim.busy = false; anim.phase = 'done'; $('#station-return').disabled = false; $('#station-return').textContent = '↩ Kembalikan wadah'; }, 980);
 }
 function completeReturn(ok) {
   if (ok && anim.type === 'return' && anim.phase === 'reading') { clearSteps(); finishReturn(); }
@@ -333,13 +333,13 @@ $('#station-return').addEventListener('click', () => {
 });
 $('#station-weight').addEventListener('input', e => { $('#station-weight-value').textContent = e.target.value; });
 $('#station-door-toggle').setAttribute('aria-pressed', 'true');
-$('#station-door-toggle').innerHTML = '<span>↙</span> Tutup pintu';
+$('#station-door-toggle').innerHTML = '<span>↙</span> Tutup pintu untuk melihat bagian dalam';
 $('#station-status').textContent = 'Siap · ruang timbang terbuka';
 $('#station-note').textContent = 'Tampilan awal memperlihatkan susunan prototipe: rangkaian di rak atas, wadah pada load cell di ruang bawah, dan servo di kanan bawah.';
 $('#station-door-toggle').addEventListener('click', e => {
   const open = anim.doorTarget < .6; anim.doorTarget = open ? 1.25 : 0;
   e.currentTarget.setAttribute('aria-pressed', String(open));
-  e.currentTarget.innerHTML = open ? '<span>↙</span> Tutup pintu' : '<span>↗</span> Buka/tutup pintu';
+  e.currentTarget.innerHTML = open ? '<span>↙</span> Tutup pintu untuk melihat bagian dalam' : '<span>↗</span> Buka pintu';
 });
 $('#station-reset').addEventListener('click', resetView);
 $('#station-explode').addEventListener('click', e => {
