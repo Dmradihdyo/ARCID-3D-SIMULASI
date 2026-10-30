@@ -225,11 +225,13 @@ document.querySelectorAll('.component-chip').forEach(b => b.addEventListener('cl
 const stateLabel = $('#station-status'), stateLed = $('#station-led'), txLabel = $('#station-tx-label'), note = $('#station-note');
 const flowSteps = ['rfid', 'weight', 'server', 'door', 'removed'];
 function stageUI(stage) {
-  const index = flowSteps.indexOf(stage);
+  const internalStage = stage === 'closing' ? 'door' : stage === 'done' ? 'removed' : stage === 'rejected' ? 'server' : stage;
+  const index = flowSteps.indexOf(internalStage);
   document.querySelectorAll('#station-stages li').forEach((li, i) => {
     li.classList.toggle('active', i === index);
-    li.classList.toggle('done', index >= 0 && i < index);
+    li.classList.toggle('done', stage === 'done' || (index >= 0 && i < index));
   });
+  window.stationProgress?.(anim.type, stage, stage === 'rejected' ? 'error' : 'active');
 }
 function setStatus(label, mode = 'ready') {
   stateLabel.textContent = label;
@@ -243,7 +245,7 @@ function clearSteps() { stepTimers.forEach(clearTimeout); stepTimers = []; anim.
 function later(fn, ms) { stepTimers.push(setTimeout(fn, ms)); }
 function setStage(stage) {
   if (stage === 'reading') { stageUI('rfid'); txLabel.textContent = 'Membaca UID wadah'; setStatus('RFID terbaca · timbang stabil', 'busy'); anim.scan = 1; note.textContent = 'RC522 membaca UID, lalu HX711 mengambil beberapa sampel berat.'; }
-  if (stage === 'rejected') { stageUI('server'); txLabel.textContent = 'Ditolak oleh server'; setStatus('Berat tidak valid · pintu tetap terbuka', 'error'); anim.doorTarget = 1.25; note.textContent = 'Sesuai firmware, keputusan penolakan tidak menutup pintu jika wadah atau tag masih terdeteksi.'; }
+  if (stage === 'rejected') { stageUI('rejected'); txLabel.textContent = 'Ditolak oleh server'; setStatus('Berat tidak valid · pintu tetap terbuka', 'error'); anim.doorTarget = 1.25; note.textContent = 'Sesuai firmware, keputusan penolakan tidak menutup pintu jika wadah atau tag masih terdeteksi.'; }
 }
 function startBorrow(fromControl = true) {
   if (anim.busy || anim.phase === 'waiting_pickup') { if (anim.phase === 'waiting_pickup') completeBorrow(); return; }
@@ -257,16 +259,16 @@ function startBorrow(fromControl = true) {
   later(() => {
     anim.trayY = 0;
     if (weight < 60 || weight > 200) {
-      stageUI('server'); txLabel.textContent = 'Berat di luar rentang'; setStatus('Validasi gagal · pintu tertutup', 'error');
+      stageUI('rejected'); txLabel.textContent = 'Berat di luar rentang'; setStatus('Validasi gagal · pintu tertutup', 'error');
       note.textContent = `${weight} g tidak lolos rentang 60–200 g. Server menolak dan pintu tetap tertutup.`;
-      anim.busy = false; anim.phase = 'rejected'; return;
+      anim.busy = false; anim.phase = 'rejected'; window.stationPhoneReject?.(`Berat wadah tidak sesuai (${weight} g, batas 60–200 g)`); return;
     }
     stageUI('server'); txLabel.textContent = 'Server menyetujui pinjaman';
     later(() => {
       stageUI('door'); txLabel.textContent = 'Servo membuka pintu'; anim.doorTarget = 1.25; anim.phase = 'waiting_pickup'; anim.busy = false;
       setStatus('Pintu terbuka · wadah siap diambil', 'busy');
-      note.textContent = 'Pemeriksaan berhasil. Ambil wadah dari ruang bawah, lalu tekan “Ambil wadah” untuk menutup pintu dan mencatat transaksi.';
-      $('#station-borrow').textContent = '✓ Ambil wadah';
+      note.textContent = 'Pemeriksaan berhasil. Tekan “Ambil wadah” untuk mensimulasikan wadah diambil. Layar web selesai otomatis setelah pintu tertutup.';
+      $('#station-borrow').textContent = 'Ambil wadah';
     }, 520);
   }, 1120);
 }
@@ -276,11 +278,11 @@ function completeBorrow() {
   stageUI('removed'); txLabel.textContent = 'Timbangan kosong · konfirmasi'; anim.trayY = -.008;
   setStatus('Wadah diambil · mengonfirmasi', 'busy');
   note.textContent = 'Berat kosong stabil ≤5 g dikonfirmasi ke server. Firmware menunggu sekitar 700 ms sebelum menutup pintu.';
-  later(() => { stageUI('door'); txLabel.textContent = 'Servo menutup pintu'; anim.doorTarget = 0; }, 750);
+  later(() => { stageUI('closing'); txLabel.textContent = 'Servo menutup pintu'; anim.doorTarget = 0; }, 750);
   later(() => {
-    stageUI(''); txLabel.textContent = 'Pinjaman tercatat'; setStatus('Transaksi selesai · pintu tertutup');
+    anim.phase = 'done'; stageUI('done'); txLabel.textContent = 'Pinjaman tercatat'; setStatus('Transaksi selesai · pintu tertutup');
     note.textContent = 'Wadah yang diambil tercatat setelah sensor beban memastikan tatakan kosong.';
-    anim.busy = false; anim.phase = 'done'; $('#station-borrow').textContent = '▶ Pinjam wadah';
+    anim.busy = false; $('#station-borrow').textContent = '▶ Pinjam wadah'; window.stationPhoneComplete?.('borrow');
   }, 1450);
 }
 function startReturn(fromControl = true) {
@@ -305,19 +307,20 @@ function performReturn() {
   later(() => {
     anim.trayY = 0; stageUI('server');
     if (weight < 60 || weight > 200) {
+      stageUI('rejected');
       txLabel.textContent = 'Berat di luar rentang'; setStatus('Ditolak · pintu tetap terbuka', 'error');
       note.textContent = `${weight} g tidak lolos rentang 60–200 g. Pengembalian ditolak; pintu tetap terbuka. Atur berat lalu tekan “Coba lagi”.`;
-      anim.busy = false; anim.phase = 'rejected'; $('#station-return').disabled = false; $('#station-return').textContent = '↻ Coba lagi'; return;
+      anim.busy = false; anim.phase = 'rejected'; $('#station-return').disabled = false; $('#station-return').textContent = '↻ Coba lagi'; window.stationPhoneReject?.(`Berat tidak sesuai (${weight} g, batas 60–200 g)`); return;
     }
     txLabel.textContent = 'Server menyetujui pengembalian';
     later(() => finishReturn(), 520);
   }, 1180);
 }
 function finishReturn() {
-  stageUI('door'); txLabel.textContent = 'Bunyi sukses · pintu menutup'; setStatus('Pengembalian diterima', 'busy');
+  stageUI('closing'); txLabel.textContent = 'Bunyi sukses · pintu menutup'; setStatus('Pengembalian diterima', 'busy');
   note.textContent = 'Server mengesahkan wadah. Buzzer memberi dua bunyi pendek, lalu servo menutup pintu.';
   later(() => { anim.doorTarget = 0; }, 260);
-  later(() => { stageUI(''); txLabel.textContent = 'Pengembalian tercatat'; setStatus('Transaksi selesai · pintu tertutup'); note.textContent = 'Wadah diterima, tercatat di sistem, dan pintu kembali tertutup.'; anim.busy = false; anim.phase = 'done'; $('#station-return').disabled = false; $('#station-return').textContent = '↩ Kembalikan wadah'; }, 980);
+  later(() => { anim.phase = 'done'; stageUI('done'); txLabel.textContent = 'Pengembalian tercatat'; setStatus('Transaksi selesai · pintu tertutup'); note.textContent = 'Wadah diterima, tercatat di sistem, dan pintu kembali tertutup.'; anim.busy = false; $('#station-return').disabled = false; $('#station-return').textContent = '↩ Kembalikan wadah'; window.stationPhoneComplete?.('return'); }, 980);
 }
 function completeReturn(ok) {
   if (ok && anim.type === 'return' && anim.phase === 'reading') { clearSteps(); finishReturn(); }
