@@ -92,6 +92,16 @@ a{color:inherit}
 .sp{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
 .av{flex:none;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font:700 20px Outfit,sans-serif;color:#fff}
 .sp h4{font-size:18px;font-weight:600}.sp p{color:var(--mute)}
+/* Diagram panels: restrained lines, labels, and arrows; no decorative gradients. */
+.diagram-intro{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin:0 0 20px}.diagram-intro h3{font-size:22px;font-weight:600;line-height:1.2}.diagram-intro p{max-width:62ch;color:var(--mute);font-size:14px;margin-top:5px}.diagram-kicker{color:var(--mute);font-size:11px;font-weight:800;letter-spacing:.12em;white-space:nowrap}
+.flow-panel{padding:20px;border:1px solid var(--line);border-radius:20px;background:var(--s2)}.flow-panel .seg{margin-bottom:18px}.flow-panel .seg button{min-height:36px;padding:0 17px;font-size:13px}
+.process-flow{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;align-items:stretch;padding:2px 0 8px}.flow-step{position:relative;min-width:0;padding:14px 12px 13px;border:1px solid var(--line);border-radius:14px;background:var(--surf)}.flow-step:not(:last-child):after{content:"→";position:absolute;z-index:1;right:-14px;top:50%;transform:translate(50%,-50%);width:18px;color:var(--mute);font-size:18px;text-align:center;background:var(--s2)}.flow-step-number{display:grid;place-items:center;width:25px;height:25px;border-radius:50%;background:var(--accSoft);color:var(--acc);font:700 13px Outfit,sans-serif;margin-bottom:9px}.flow-step h4{font-size:14px;font-weight:700;line-height:1.3}.flow-step p{margin-top:4px;color:var(--mute);font-size:12px;line-height:1.45}.flow-step.good{border-color:color-mix(in srgb,var(--g) 35%,var(--line))}.flow-step.good .flow-step-number{background:var(--gSoft);color:var(--g)}
+.flow-result{display:flex;align-items:flex-start;gap:10px;margin-top:8px;padding:10px 12px;border-radius:12px;background:var(--surf);color:var(--mute);font-size:12px;line-height:1.45}.flow-result b{color:var(--ink)}.flow-result .result-mark{flex:none;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:var(--rSoft);color:var(--r);font-size:12px;font-weight:800}
+.rule-lanes{display:grid;grid-template-columns:1fr 1fr;gap:14px}.rule-lane{padding:18px;border:1px solid var(--line);border-radius:18px;background:var(--surf)}.rule-lane-head{display:flex;align-items:center;gap:10px;margin-bottom:15px}.rule-lane-head .i{width:30px;height:30px;margin:0;background:var(--s2);color:var(--ink);font-size:12px;font-weight:800}.rule-lane-head h4{font-size:16px}.rule-path{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.rule-node{position:relative;min-height:82px;padding:12px;border:1px solid var(--line);border-radius:13px;background:var(--s2)}.rule-node:not(:last-child):after{content:"→";position:absolute;right:-13px;top:50%;transform:translate(50%,-50%);z-index:1;color:var(--mute);font-size:16px;background:var(--s2);width:18px;text-align:center}.rule-node b{display:block;font-size:13px;line-height:1.3}.rule-node span{display:block;margin-top:5px;color:var(--mute);font-size:11px;line-height:1.4}.rule-node.result{border-color:color-mix(in srgb,var(--g) 38%,var(--line));background:var(--gSoft)}.rule-node.result b{color:var(--g)}.rule-node.reject{border-color:color-mix(in srgb,var(--r) 35%,var(--line));background:var(--rSoft)}.rule-node.reject b{color:var(--r)}
+.rule-notes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.rule-note{display:flex;gap:10px;align-items:center;padding:11px 12px;border:1px solid var(--line);border-radius:13px;background:var(--s2);font-size:12px;line-height:1.4}.rule-note b{display:block;font-size:12px}.rule-note span{color:var(--mute)}.rule-note .i{width:28px;height:28px;margin:0;flex:none;background:var(--surf);color:var(--ink);font-size:11px;font-weight:800}
+.station-diagram{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:18px;align-items:stretch}.station-figure{min-width:0;padding:14px;border:1px solid var(--line);border-radius:18px;background:var(--s2)}.station-figure svg{display:block;width:100%;height:auto}.station-figure figcaption{margin-top:7px;text-align:center;color:var(--mute);font-size:11px}.station-dataflow{display:flex;flex-direction:column;justify-content:center;gap:12px;padding:18px;border:1px solid var(--line);border-radius:18px;background:var(--surf)}.station-dataflow h4{font-size:16px;margin-bottom:2px}.component-route{display:grid;grid-template-columns:1fr 24px 1fr;align-items:center;gap:7px}.component-node{min-width:0;padding:12px 10px;border:1px solid var(--line);border-radius:12px;background:var(--s2);text-align:center}.component-node b{display:block;font-size:13px;line-height:1.3}.component-node span{display:block;margin-top:4px;color:var(--mute);font-size:11px;line-height:1.35}.component-arrow{text-align:center;color:var(--mute);font-size:18px}.component-route.wide{grid-template-columns:1fr 24px 1fr}.component-node.output{background:var(--accSoft);border-color:color-mix(in srgb,var(--acc) 28%,var(--line))}.component-node.success{background:var(--gSoft);border-color:color-mix(in srgb,var(--g) 30%,var(--line))}.station-data-note{padding:10px 12px;border-left:3px solid var(--line);color:var(--mute);font-size:12px;line-height:1.5}
+@media(max-width:1050px){.process-flow{grid-template-columns:1fr;gap:12px}.flow-step:not(:last-child):after{content:"↓";right:50%;top:auto;bottom:-13px;transform:translate(50%,50%);background:var(--s2)}.rule-lanes{grid-template-columns:1fr}.station-diagram{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.diagram-intro{display:block}.diagram-kicker{display:block;margin-top:8px}.flow-panel{padding:14px}.process-flow{grid-template-columns:1fr;gap:12px}.flow-step{padding:12px}.flow-step:not(:last-child):after{content:"↓";right:50%;top:auto;bottom:-13px;transform:translate(50%,50%);background:var(--s2)}.flow-step:nth-child(3n):after{display:block}.flow-step:last-child:after{display:none}.rule-path{grid-template-columns:1fr;gap:12px}.rule-node{min-height:0}.rule-node:not(:last-child):after{content:"↓";right:50%;top:auto;bottom:-13px;transform:translate(50%,50%);background:var(--s2)}.rule-notes{grid-template-columns:1fr}.station-diagram{grid-template-columns:1fr}.station-dataflow{padding:14px}}
 .faq h2{font-size:30px;font-weight:600;margin:64px 0 16px}
 details{border:1px solid var(--line);border-radius:18px;margin-top:10px;background:var(--surf);transition:background .2s}
 details[open]{background:var(--s2)}
@@ -329,36 +339,88 @@ body{overflow-x:clip}
 </div>
 
 <div class="tp" id="p2" role="tabpanel" aria-labelledby="t2" hidden>
+<div class="diagram-intro"><div><h3>Alur transaksi di web dan stasiun</h3><p>Web memulai transaksi. Stasiun membaca wadah, meminta validasi server, lalu memperbarui status setelah pintu selesai bergerak.</p></div><span class="diagram-kicker">WEB ↔ SUPABASE ↔ ESP32</span></div>
+<div class="flow-panel">
 <div class="seg" role="tablist" aria-label="Pilih alur"><button role="tab" id="s1" aria-selected="true" aria-controls="q1">Pinjam</button><button role="tab" id="s2" aria-selected="false" aria-controls="q2">Kembalikan</button></div>
-<ol class="tl" id="q1" role="tabpanel" aria-labelledby="s1">
-<li data-n="1"><h4>Masuk dan scan</h4><p>Login dengan akun kampus, lalu scan QR di stasiun.</p></li>
-<li data-n="2"><h4>Pilih Pinjam wadah</h4><p>Pintu stasiun terbuka otomatis.</p></li>
-<li data-n="3"><h4>Ambil satu wadah</h4><p>Stasiun mencatat wadahmu sendiri. Tidak perlu menempelkan apa pun.</p></li>
-<li data-n="4"><h4>Selesai</h4><p>Pintu menutup dan kuota berkurang satu.</p></li>
-</ol>
-<ol class="tl" id="q2" role="tabpanel" aria-labelledby="s2" hidden>
-<li data-n="1"><h4>Masuk dan scan</h4><p>Login dengan akun kampus, lalu scan QR di stasiun.</p></li>
-<li data-n="2"><h4>Pilih Kembalikan wadah</h4><p>Pintu slot pengembalian terbuka.</p></li>
-<li data-n="3"><h4>Letakkan wadah</h4><p>Taruh wadah yang kosong dan bersih di slot.</p></li>
-<li data-n="4"><h4>Dicek otomatis</h4><p>Kalau cocok, kuota pulih. Kalau tidak, HP menjelaskan penyebabnya.</p></li>
-</ol>
+<div id="q1" role="tabpanel" aria-labelledby="s1">
+<div class="process-flow" aria-label="Alur peminjaman">
+<article class="flow-step"><span class="flow-step-number">1</span><h4>Mulai dari web</h4><p>Login, scan QR stasiun, lalu pilih Pinjam.</p></article>
+<article class="flow-step"><span class="flow-step-number">2</span><h4>Stasiun membaca</h4><p>RC522 membaca UID; load cell dan HX711 mengukur berat.</p></article>
+<article class="flow-step"><span class="flow-step-number">3</span><h4>Server memeriksa</h4><p>ESP32 mengirim data lewat Wi-Fi/HTTPS untuk divalidasi.</p></article>
+<article class="flow-step"><span class="flow-step-number">4</span><h4>Pintu terbuka</h4><p>Servo bergerak setelah transaksi disetujui.</p></article>
+<article class="flow-step"><span class="flow-step-number">5</span><h4>Wadah diambil</h4><p>Berat turun hingga tatakan terbaca kosong (≤5 g).</p></article>
+<article class="flow-step good"><span class="flow-step-number">6</span><h4>Selesai otomatis</h4><p>Pintu menutup; web mencatat pinjaman tanpa tombol selesai.</p></article>
+</div>
+<div class="flow-result"><span class="result-mark">!</span><span><b>Jika ditolak:</b> pintu tetap tertutup. Web menampilkan alasan transaksi tidak dapat dilanjutkan.</span></div>
+</div>
+<div id="q2" role="tabpanel" aria-labelledby="s2" hidden>
+<div class="process-flow" aria-label="Alur pengembalian">
+<article class="flow-step"><span class="flow-step-number">1</span><h4>Mulai dari web</h4><p>Login, scan QR stasiun, lalu pilih Kembalikan.</p></article>
+<article class="flow-step"><span class="flow-step-number">2</span><h4>Pintu terbuka</h4><p>ESP32 menerima transaksi dan servo membuka slot.</p></article>
+<article class="flow-step"><span class="flow-step-number">3</span><h4>Letakkan wadah</h4><p>Taruh wadah pinjaman pada tatakan timbang.</p></article>
+<article class="flow-step"><span class="flow-step-number">4</span><h4>Sensor memeriksa</h4><p>RC522 membaca UID; HX711 mengirim hasil berat.</p></article>
+<article class="flow-step"><span class="flow-step-number">5</span><h4>Server memvalidasi</h4><p>Server mengecek wadah dan rentang berat 60–200 g.</p></article>
+<article class="flow-step good"><span class="flow-step-number">6</span><h4>Selesai otomatis</h4><p>Jika diterima, buzzer berbunyi dan pintu menutup; web diperbarui.</p></article>
+</div>
+<div class="flow-result"><span class="result-mark">!</span><span><b>Jika ditolak:</b> pintu tetap terbuka agar wadah dapat diperiksa atau dikeluarkan. Web menampilkan alasannya.</span></div>
+</div>
+</div>
 </div>
 
 <div class="tp" id="p3" role="tabpanel" aria-labelledby="t3" hidden>
-<div class="rg">
-<div class="rc"><h4>Kuota</h4><b>2 wadah</b><p>Kembalikan satu wadah untuk membuka kuota lagi.</p></div>
-<div class="rc"><h4>Berat wadah</h4><b>60-200 g</b><p>Keputusan server menentukan alur pintu: peminjaman yang ditolak tetap tertutup, pengembalian yang ditolak tetap terbuka.</p></div>
-<div class="rc"><h4>Satu pengguna</h4><b>1 per waktu</b><p>QR mengunci stasiun untukmu, jadi data tidak tertukar saat kantin ramai.</p></div>
-<div class="rc"><h4>Terlambat</h4><b>Kuota dikunci</b><p>Pengingat dikirim lewat email. Kuota terbuka lagi setelah wadah dikembalikan.</p></div>
+<div class="diagram-intro"><div><h3>Syarat sebelum transaksi diterima</h3><p>Setiap jalur memiliki pemeriksaan sendiri. Jika syarat gagal, server menolak transaksi dan layar web menjelaskan penyebabnya.</p></div><span class="diagram-kicker">ATURAN TRANSAKSI</span></div>
+<div class="rule-lanes">
+<section class="rule-lane" aria-labelledby="rule-borrow-title"><div class="rule-lane-head"><span class="i">P</span><h4 id="rule-borrow-title">Pinjam wadah</h4></div><div class="rule-path">
+<div class="rule-node"><b>Akun kampus aktif</b><span>Login dan scan QR stasiun.</span></div><div class="rule-node"><b>Kuota tersedia</b><span>Maksimal 2 wadah per pengguna.</span></div><div class="rule-node result"><b>Transaksi disetujui</b><span>Tag dan berat lolos validasi; pintu membuka.</span></div>
+</div></section>
+<section class="rule-lane" aria-labelledby="rule-return-title"><div class="rule-lane-head"><span class="i">K</span><h4 id="rule-return-title">Kembalikan wadah</h4></div><div class="rule-path">
+<div class="rule-node"><b>UID sesuai</b><span>Tag terdaftar dan cocok dengan pinjaman.</span></div><div class="rule-node"><b>Berat sesuai</b><span>Berat wadah 60–200 g.</span></div><div class="rule-node result"><b>Pengembalian diterima</b><span>Pintu menutup dan kuota terbuka kembali.</span></div>
+</div></section>
 </div>
+<div class="rule-notes">
+<div class="rule-note"><span class="i">1</span><div><b>Satu transaksi aktif</b><span>Stasiun dikunci untuk satu pengguna pada satu waktu.</span></div></div>
+<div class="rule-note"><span class="i">≤5</span><div><b>Tatakan kosong</b><span>Berat ≤5 g dipakai untuk memastikan wadah pinjaman sudah diambil.</span></div></div>
+<div class="rule-note"><span class="i">!</span><div><b>Jika terlambat</b><span>Kuota dikunci sampai wadah dikembalikan.</span></div></div>
+</div>
+<div class="flow-result"><span class="result-mark">!</span><span><b>Pengembalian gagal:</b> pintu tetap terbuka. Keluarkan wadah atau perbaiki pembacaan, lalu coba kembali.</span></div>
 </div>
 
 <div class="tp" id="p4" role="tabpanel" aria-labelledby="t4" hidden>
-<div class="sp"><span class="av" style="background:#4285F4">R</span><div><h4>Tag dan pembaca RFID</h4><p>Setiap wadah punya tag dengan nomor seri sendiri. Pembaca di dalam stasiun mengenalinya otomatis.</p></div></div>
-<div class="sp"><span class="av" style="background:#EA4335">L</span><div><h4>Load cell</h4><p>Mengukur berat wadah. Firmware menerima 60–200 g dan menganggap tatakan kosong pada ≤5 g.</p></div></div>
-
-<div class="sp"><span class="av" style="background:#34A853">S</span><div><h4>Servo dan ESP32</h4><p>ESP32 mengirim data lewat Wi-Fi/HTTPS ke Supabase. Servo continuous menggerakkan pintu dan buzzer memberi tanda hasil.</p></div></div>
-<div class="sp"><span class="av" style="background:#1A73E8">F</span><div><h4>Supabase</h4><p>Server memvalidasi transaksi; ESP32 hanya melaporkan tag dan berat lalu menjalankan keputusan server.</p></div></div>
+<div class="diagram-intro"><div><h3>Komponen di dalam stasiun</h3><p>Susunan ini mengikuti prototipe: papan elektronik berada di rak atas, wadah ditimbang di ruang bawah, dan servo berada dekat pintu.</p></div><span class="diagram-kicker">SUSUNAN & ALIRAN DATA</span></div>
+<div class="station-diagram">
+<figure class="station-figure">
+<svg viewBox="0 0 760 430" role="img" aria-labelledby="station-svg-title station-svg-desc">
+<title id="station-svg-title">Diagram potongan stasiun wadah</title><desc id="station-svg-desc">ESP32, pembaca RFID RC522, dan modul HX711 berada pada rak atas. Wadah berada di tatakan dengan load cell di bawahnya. Servo dipasang dekat pintu.</desc>
+<rect x="34" y="22" width="430" height="366" rx="9" fill="var(--surf)" stroke="var(--mute)" stroke-width="3"/>
+<rect x="54" y="42" width="390" height="112" rx="5" fill="var(--s2)" stroke="var(--line)" stroke-width="2"/>
+<text x="249" y="64" text-anchor="middle" fill="var(--mute)" font-size="13" font-weight="700">RAK ATAS · RANGKAIAN</text>
+<rect x="77" y="80" width="108" height="48" rx="6" fill="#263746"/><rect x="85" y="88" width="92" height="31" rx="3" fill="#91a4b2"/><text x="131" y="145" text-anchor="middle" fill="var(--ink)" font-size="12" font-weight="700">ESP32</text>
+<rect x="207" y="80" width="91" height="48" rx="6" fill="#365c78"/><text x="252" y="145" text-anchor="middle" fill="var(--ink)" font-size="12" font-weight="700">RC522</text>
+<rect x="319" y="80" width="94" height="48" rx="6" fill="#ac5147"/><text x="366" y="145" text-anchor="middle" fill="var(--ink)" font-size="12" font-weight="700">HX711</text>
+<line x1="54" y1="171" x2="444" y2="171" stroke="var(--mute)" stroke-width="8"/>
+<rect x="54" y="187" width="390" height="182" rx="5" fill="var(--s2)" stroke="var(--line)" stroke-width="2"/>
+<rect x="68" y="219" width="42" height="48" rx="5" fill="#365c78"/><path d="M77 241q12-14 24 0m-28 9q16-20 32 0" fill="none" stroke="#fff" stroke-width="2"/><text x="89" y="284" text-anchor="middle" fill="var(--ink)" font-size="10" font-weight="700">RFID</text>
+<path d="M151 239q0-13 16-13h194q16 0 16 13l-12 65q-2 12-17 12H180q-15 0-18-12z" fill="#e6ebef" stroke="#758795" stroke-width="2"/><path d="M155 243h218" stroke="#809bb0" stroke-width="4"/>
+<line x1="173" y1="329" x2="355" y2="329" stroke="#98a9b5" stroke-width="12" stroke-linecap="round"/><text x="264" y="355" text-anchor="middle" fill="var(--mute)" font-size="11">load cell di bawah tatakan</text>
+<rect x="386" y="280" width="43" height="59" rx="6" fill="#303b45"/><rect x="394" y="269" width="27" height="12" rx="4" fill="#d95449"/><path d="M407 270l27-18" stroke="#444" stroke-width="5" stroke-linecap="round"/><text x="407" y="356" text-anchor="middle" fill="var(--ink)" font-size="11" font-weight="700">SERVO</text>
+<text x="249" y="410" text-anchor="middle" fill="var(--mute)" font-size="12" font-weight="700">POTONGAN DEPAN STASIUN</text>
+<!-- callouts -->
+<path d="M132 93H485V94H520" fill="none" stroke="var(--line)" stroke-width="2"/><circle cx="132" cy="93" r="4" fill="var(--acc)"/><text x="532" y="91" fill="var(--ink)" font-size="14" font-weight="700">ESP32</text><text x="532" y="110" fill="var(--mute)" font-size="12">pengendali dan koneksi Wi-Fi</text>
+<path d="M252 103H495V153H520" fill="none" stroke="var(--line)" stroke-width="2"/><circle cx="252" cy="103" r="4" fill="var(--acc)"/><text x="532" y="150" fill="var(--ink)" font-size="14" font-weight="700">RFID RC522</text><text x="532" y="169" fill="var(--mute)" font-size="12">membaca UID tag wadah</text>
+<path d="M366 103H505V212H520" fill="none" stroke="var(--line)" stroke-width="2"/><circle cx="366" cy="103" r="4" fill="var(--acc)"/><text x="532" y="209" fill="var(--ink)" font-size="14" font-weight="700">HX711 + load cell</text><text x="532" y="228" fill="var(--mute)" font-size="12">mengukur berat wadah</text>
+<path d="M407 305H520" fill="none" stroke="var(--line)" stroke-width="2"/><circle cx="407" cy="305" r="4" fill="var(--acc)"/><text x="532" y="301" fill="var(--ink)" font-size="14" font-weight="700">Servo pintu</text><text x="532" y="320" fill="var(--mute)" font-size="12">membuka dan menutup akses</text>
+<rect x="520" y="347" width="191" height="31" rx="9" fill="var(--surf)" stroke="var(--line)"/><text x="615" y="367" text-anchor="middle" fill="var(--mute)" font-size="11">Buzzer memberi tanda hasil</text>
+</svg>
+<figcaption>Skema posisi komponen, bukan ukuran manufaktur.</figcaption>
+</figure>
+<div class="station-dataflow">
+<h4>Aliran data dan kendali</h4>
+<div class="component-route"><div class="component-node"><b>RFID + timbangan</b><span>UID tag dan berat wadah</span></div><span class="component-arrow">→</span><div class="component-node output"><b>ESP32</b><span>membaca sensor dan mengirim data</span></div></div>
+<div class="component-route"><div class="component-node"><b>Web ARCID</b><span>pengguna memulai transaksi</span></div><span class="component-arrow">↔</span><div class="component-node output"><b>Supabase</b><span>validasi dan catatan transaksi</span></div></div>
+<div class="component-route"><div class="component-node output"><b>ESP32</b><span>menerima status keputusan</span></div><span class="component-arrow">→</span><div class="component-node success"><b>Servo + buzzer</b><span>menjalankan hasil transaksi</span></div></div>
+<p class="station-data-note">Web dan stasiun mengikuti transaksi yang sama. Status berhasil muncul setelah proses pintu selesai.</p>
+</div>
+</div>
 </div>
 </div>
 
