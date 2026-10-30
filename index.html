@@ -55,7 +55,7 @@ a{color:inherit}
 .s2{width:110px;height:110px;border-radius:28%;background:#EA4335;right:32%;bottom:10%;--t:11s}
 .s3{width:190px;height:72px;border-radius:99px;background:#FBBC04;right:5%;bottom:22%;--t:8s}
 .s4{width:120px;height:120px;background:#34A853;clip-path:polygon(50% 0,100% 100%,0 100%);right:27%;top:9%;--t:10s}
-.main{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:44px;margin-top:40px;align-items:start}
+.main{display:grid;grid-template-columns:minmax(0,1fr);gap:44px;margin-top:40px;align-items:start}
 .side{position:sticky;top:84px;background:var(--s2);border:1px solid var(--line);border-radius:28px;padding:22px 16px;display:flex;flex-direction:column;align-items:center;gap:14px}
 .side h2{font-size:22px;font-weight:600;align-self:flex-start;padding-left:6px}
 .info{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
@@ -190,20 +190,21 @@ body{overflow-x:clip}
 
 .station3d-section{margin:72px 0 28px;padding:34px;border:1px solid var(--line);border-radius:30px;background:var(--s2);scroll-margin-top:92px}
 .station3d-head{display:flex;justify-content:space-between;align-items:flex-start;gap:22px;margin-bottom:24px}.station3d-head>div{max-width:720px}.station-kicker{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--acc)}.station3d-head h2{font-size:clamp(28px,3.6vw,40px);line-height:1.1;margin:8px 0}.station3d-head p{color:var(--mute);max-width:68ch}.model-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);background:var(--surf);border-radius:99px;font-size:13px;font-weight:700;white-space:nowrap}.model-badge i,.state-led{width:9px;height:9px;border-radius:50%;background:#34A853;box-shadow:0 0 0 4px rgba(52,168,83,.12)}
-.station3d-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(300px,.75fr);gap:18px;align-items:stretch}.station-view-card,.station-control-card{background:var(--surf);border:1px solid var(--line);border-radius:24px;overflow:hidden}.station-canvas-wrap{height:460px;position:relative;background:radial-gradient(ellipse at 50% 38%,#e9f0f8 0%,#dce5ef 54%,#d4dce5 100%)}:root[data-theme=dark] .station-canvas-wrap{background:radial-gradient(ellipse at 50% 38%,#34404e,#202833 70%)}@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .station-canvas-wrap{background:radial-gradient(ellipse at 50% 38%,#34404e,#202833 70%)}}
+.station3d-grid{display:grid;grid-template-columns:minmax(0,1fr) 365px;gap:18px;align-items:start}.station-view-card,.station-control-card{background:var(--surf);border:1px solid var(--line);border-radius:24px;overflow:hidden}.station-view-card{grid-column:1;grid-row:1;align-self:start}.station-control-card{grid-column:1/-1;grid-row:2}.station3d-grid>.side{grid-column:2;grid-row:1;position:static;top:auto;width:100%;margin:0;align-self:start;order:0}.station-canvas-wrap{height:460px;position:relative;background:radial-gradient(ellipse at 50% 38%,#e9f0f8 0%,#dce5ef 54%,#d4dce5 100%)}:root[data-theme=dark] .station-canvas-wrap{background:radial-gradient(ellipse at 50% 38%,#34404e,#202833 70%)}@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .station-canvas-wrap{background:radial-gradient(ellipse at 50% 38%,#34404e,#202833 70%)}}
 #station-canvas{display:block;width:100%;height:100%;touch-action:none}.station-svg-fallback{position:absolute;inset:0;width:100%;height:100%;display:grid;place-items:center}.station-svg-fallback svg{width:100%;height:100%}.canvas-hint{position:absolute;bottom:14px;left:16px;color:#526171;font-size:12px;background:rgba(255,255,255,.76);border-radius:99px;padding:6px 10px;pointer-events:none}.station-top-actions{position:absolute;top:14px;right:14px;display:flex;gap:8px}.model-icon-btn{border:1px solid rgba(50,60,70,.18);border-radius:12px;background:rgba(255,255,255,.9);color:#233044;min-height:38px;padding:0 12px;font:700 14px "Plus Jakarta Sans",sans-serif;cursor:pointer}.model-icon-btn:first-child{width:40px;padding:0;font-size:23px}.model-toast{position:absolute;left:50%;top:18px;transform:translate(-50%,-8px);opacity:0;background:#202124;color:white;border-radius:99px;padding:8px 13px;font-size:12px;transition:.2s;pointer-events:none}.model-toast.show{opacity:1;transform:translate(-50%,0)}
 .station-view-controls{display:flex;align-items:center;gap:8px;padding:12px 14px;flex-wrap:wrap}.station-toggle{border:1px solid var(--line);background:var(--surf);border-radius:12px;padding:8px 11px;color:var(--ink);font:600 13px "Plus Jakarta Sans",sans-serif;cursor:pointer}.station-toggle[aria-pressed=true]{background:var(--accSoft);border-color:var(--acc);color:var(--acc)}.station-toggle span{font-size:16px;margin-right:3px}.approx-dim{margin-left:auto;color:var(--mute);font-size:11px}
 .station-control-card{padding:18px;display:flex;flex-direction:column;gap:13px}.station-state{display:flex;align-items:center;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--line)}.state-led{flex:none}.state-led.busy{background:#F9AB00;box-shadow:0 0 0 4px rgba(249,171,0,.14)}.state-led.error{background:#D93025;box-shadow:0 0 0 4px rgba(217,48,37,.14)}.station-state small{display:block;color:var(--mute);font-size:10px;font-weight:800;letter-spacing:.09em}.station-state b{display:block;font-size:14px}.station-flow-controls{display:grid;grid-template-columns:1fr 1fr;gap:8px}.flow-btn{min-height:42px;border-radius:12px;border:1px solid var(--line);background:var(--surf);color:var(--ink);font:700 12px "Plus Jakarta Sans",sans-serif;cursor:pointer}.flow-btn.primary{border-color:var(--acc);background:var(--acc);color:var(--accInk)}.flow-btn:disabled{opacity:.48;cursor:not-allowed}.weight-control{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:600}.weight-control b{font-size:16px;color:var(--acc)}#station-weight{width:100%;accent-color:var(--acc);margin:0}.weight-range{display:flex;justify-content:space-between;color:var(--mute);font-size:10px;margin-top:-9px}.station-stagebox{padding:12px;border:1px solid var(--line);border-radius:15px;background:var(--s2)}.stage-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12px}.stage-title span{color:var(--mute);font-size:10px}.station-stages{list-style:none;padding:0;display:grid;gap:5px}.station-stages li{position:relative;padding:5px 7px 5px 24px;border-radius:8px;color:var(--mute);font-size:11px;transition:.2s}.station-stages li:before{content:"";position:absolute;left:8px;top:11px;width:7px;height:7px;border:1.5px solid var(--line);border-radius:50%}.station-stages li.active{background:var(--accSoft);color:var(--acc);font-weight:700}.station-stages li.active:before{background:var(--acc);border-color:var(--acc)}.station-stages li.done{color:var(--g)}.station-stages li.done:before{content:"✓";border:0;top:4px;font-weight:900}.station-note{color:var(--mute);font-size:11px;line-height:1.5;min-height:34px}
 .component-strip{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.component-chip{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 13px;border:1px solid var(--line);border-radius:99px;background:var(--surf);color:var(--mute);font:600 12px "Plus Jakarta Sans",sans-serif;cursor:pointer}.component-chip.active{color:var(--acc);border-color:var(--acc);background:var(--accSoft)}.chip-dot{width:9px;height:9px;border-radius:3px}.chip-dot.esp{background:#243b59}.chip-dot.rfid{background:#3178ce}.chip-dot.scale{background:#ef4937}.chip-dot.servo{background:#4b5563}.chip-dot.buzzer{background:#252a32}.component-detail{display:grid;grid-template-columns:38px minmax(0,1fr) auto;align-items:center;gap:12px;margin-top:12px;padding:14px 16px;background:var(--surf);border:1px solid var(--line);border-radius:16px}.component-number{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--accSoft);color:var(--acc);font:700 13px Outfit,sans-serif}.component-detail b{font-size:14px}.component-detail p{color:var(--mute);font-size:12px;line-height:1.45;margin-top:2px}.component-detail code{font-size:10px;color:var(--mute);text-align:right;max-width:260px;white-space:normal}.model-disclaimer{font-size:11px;color:var(--mute);margin:12px 2px 0}
-@media(max-width:900px){.station3d-grid{grid-template-columns:1fr}.station-control-card{display:grid;grid-template-columns:1fr 1fr;align-items:start}.station-state,.station-flow-controls{grid-column:span 2}.station-stagebox,.station-note{grid-column:span 2}.station-canvas-wrap{height:440px}}
+@media(max-width:1099px){.station3d-grid{grid-template-columns:minmax(0,1fr)}.station-view-card,.station3d-grid>.side,.station-control-card{grid-column:1;grid-row:auto}.station3d-grid>.side{display:flex;position:static;align-items:center;width:100%}.station3d-grid>.side h2{align-self:flex-start}.station3d-grid>.side .phone{grid-area:auto}}
+@media(max-width:900px){.station-control-card{display:grid;grid-template-columns:1fr 1fr;align-items:start}.station-state,.station-flow-controls{grid-column:span 2}.station-stagebox,.station-note{grid-column:span 2}.station-canvas-wrap{height:440px}}
 @media(max-width:560px){.station3d-section{padding:18px 13px;margin:48px 0;border-radius:24px}.station3d-head{display:block}.model-badge{margin-top:12px}.station-canvas-wrap{height:350px}.station-control-card{display:flex;padding:14px}.component-detail{grid-template-columns:34px 1fr}.component-detail code{grid-column:2;text-align:left}.approx-dim{width:100%;margin:0}.station-view-controls{gap:7px}}
 /* Keep the 3D controls quiet and neutral; the project explanation keeps its original theme. */
 .station-canvas-wrap{background:radial-gradient(ellipse at 50% 38%,#eeeeee 0%,#dddddd 60%,#cccccc 100%)}
 :root[data-theme=dark] .station-canvas-wrap{background:radial-gradient(ellipse at 50% 38%,#303030,#171717 72%)}
 @media(prefers-color-scheme:dark){:root:not([data-theme=light]) .station-canvas-wrap{background:radial-gradient(ellipse at 50% 38%,#303030,#171717 72%)}}
 .station3d-section{--acc:#171717;--accInk:#fff;--accSoft:#ededed}
-:root[data-theme=dark] .station3d-section{--acc:#f0f0f0;--accInk:#111;--accSoft:#383838}
-@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .station3d-section{--acc:#f0f0f0;--accInk:#111;--accSoft:#383838}}
+:root[data-theme=dark] .station3d-section{--acc:#f0f0f0;--accInk:#111;--accSoft:#1E1E1E}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .station3d-section{--acc:#f0f0f0;--accInk:#111;--accSoft:#1E1E1E}}
 .station-control-card{gap:10px}.simulation-help{font-size:11px;line-height:1.45;color:var(--mute);margin-top:-6px}
 .station-more,.station-components{border:1px solid var(--line);border-radius:14px;background:var(--s2);padding:0 12px}
 .station3d-section .station-more summary,.station3d-section .station-components summary{min-height:42px;padding:0;font-size:12px;font-weight:700}
@@ -220,6 +221,17 @@ body{overflow-x:clip}
 @media(prefers-color-scheme:dark){:root:not([data-theme=light]) .flow-btn.primary{border-color:#4a4a4a;background:#171717;color:#fff}}
 .station3d-section .station-stages li.active{background:var(--accSoft);color:var(--ink)}
 @media(max-width:900px){.station-control-card{display:flex}.station-state,.station-flow-controls,.station-stagebox,.station-note{grid-column:auto}}
+.station3d-section .side{position:static;top:auto;margin:0;width:100%;}
+.station-sync{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:0 0 18px;padding:15px 16px;border:1px solid var(--line);border-radius:18px;background:var(--surf)}
+.station-sync-head{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:2px}
+.station-sync-head b{font-size:13px}.station-sync-head span{font-size:11px;color:var(--mute)}
+.station-sync-step{position:relative;min-width:0;display:flex;align-items:center;gap:8px;color:var(--mute);font-size:11px;font-weight:650}
+.station-sync-step:not(:last-child):after{content:"";height:1px;flex:1;background:var(--line)}
+.station-sync-step i{width:21px;height:21px;display:grid;place-items:center;flex:none;border:1px solid var(--line);border-radius:50%;font-style:normal;font-size:10px}
+.station-sync-step.active{color:var(--ink)}.station-sync-step.active i{border-color:var(--ink);background:var(--ink);color:var(--surf)}
+.station-sync-step.done{color:var(--g)}.station-sync-step.done i{border-color:var(--g);background:var(--g);color:#fff}
+.station-sync-step.error{color:var(--r)}.station-sync-step.error i{border-color:var(--r);background:var(--r);color:#fff}
+@media(max-width:700px){.station-sync{grid-template-columns:1fr;gap:7px}.station-sync-head{grid-column:1}.station-sync-step:not(:last-child):after{display:none}}
 
 </style>
 </head>
@@ -247,6 +259,14 @@ body{overflow-x:clip}
     <div><span class="station-kicker">MODEL INTERAKTIF · SLB-001</span><h2 id="station3d-title">Lihat isi Stasiun Wadah Pintar</h2><p>Putar model untuk melihat susunan komponen. Pilih peminjaman atau pengembalian untuk menjalankan alurnya.</p></div>
     <span class="model-badge"><i></i>Model 3D</span>
   </div>
+  <div class="station-sync" id="station-sync" role="status" aria-live="polite" aria-label="Progres simulasi stasiun dan web">
+    <div class="station-sync-head"><b id="station-sync-title">Progres simulasi</b><span id="station-sync-status">Pilih Pinjam atau Kembalikan untuk mulai</span></div>
+    <div class="station-sync-step" data-sync-step="0"><i>1</i><span>RFID terbaca</span></div>
+    <div class="station-sync-step" data-sync-step="1"><i>2</i><span>Berat diperiksa</span></div>
+    <div class="station-sync-step" data-sync-step="2"><i>3</i><span>Server validasi</span></div>
+    <div class="station-sync-step" data-sync-step="3"><i>4</i><span>Pintu bergerak</span></div>
+    <div class="station-sync-step" data-sync-step="4"><i>5</i><span>Transaksi selesai</span></div>
+  </div>
   <div class="station3d-grid">
     <div class="station-view-card">
       <div class="station-canvas-wrap" id="station-canvas-wrap">
@@ -257,10 +277,16 @@ body{overflow-x:clip}
       </div>
       <div class="station-view-controls"><button class="station-toggle" id="station-explode" type="button" aria-pressed="false"><span>⇲</span> Pisahkan komponen</button><button class="station-toggle" id="station-door-toggle" type="button" aria-pressed="true"><span>↙</span> Tutup pintu untuk melihat bagian dalam</button><span class="approx-dim">Konsep ± 100 × 52 × 200 cm</span></div>
     </div>
+    <aside class="side" id="demo">
+      <h2>Simulasi web</h2>
+      <div class="phone"><div class="scr" id="scr" aria-live="polite"></div></div>
+      <details class="screen-jump"><summary>Pilih layar demo</summary><div class="chips" id="chips" role="group" aria-label="Pilih layar simulasi"></div></details>
+      <p class="note">Pilih transaksi di HP. Untuk pinjam, ambil wadah dari kontrol stasiun; layar ini selesai otomatis saat pintu tertutup.</p>
+    </aside>
     <aside class="station-control-card" aria-label="Kontrol dan informasi simulasi stasiun">
       <div class="station-state"><span id="station-led" class="state-led"></span><div><small>STATUS PERANGKAT</small><b id="station-status">Siap · ruang timbang terbuka</b></div></div>
       <div class="station-flow-controls"><button id="station-borrow" class="flow-btn primary" type="button" title="Jalankan pemeriksaan, buka pintu, lalu ambil wadah">▶ Pinjam wadah</button><button id="station-return" class="flow-btn" type="button" title="Buka pintu pengembalian, lalu letakkan wadah">↩ Kembalikan wadah</button></div>
-      <p class="simulation-help">Pilih transaksi. Saat pintu terbuka, ikuti tombol berikutnya untuk mengambil atau meletakkan wadah.</p>
+      <p class="simulation-help">Progres web dan stasiun mengikuti satu transaksi. Tombol “Ambil wadah” menjalankan pengambilan; hasil muncul otomatis setelah pintu tertutup.</p>
       <label class="weight-control" for="station-weight"><span>Atur berat wadah uji</span><b><output id="station-weight-value">125</output> g</b></label>
       <input id="station-weight" type="range" min="0" max="240" value="125" step="1" aria-label="Atur berat wadah simulasi">
       <div class="weight-range"><span>Kosong ≤ 5 g</span><span>Berat valid: 60–200 g</span></div>
@@ -346,12 +372,6 @@ body{overflow-x:clip}
 </div>
 </div>
 
-<aside class="side" id="demo">
-<h2>Coba langsung</h2>
-<div class="phone"><div class="scr" id="scr" aria-live="polite"></div></div>
-<details class="screen-jump"><summary>Pilih layar demo</summary><div class="chips" id="chips" role="group" aria-label="Pilih layar simulasi"></div></details>
-<p class="note">Gunakan tombol pada layar HP. Menu pilihan layar hanya untuk melihat skenario tertentu.</p>
-</aside>
 </div>
 </main>
 <footer class="ft"><span class="brand" style="font-size:18px"><img class="brand-logo" src="assets/arcid-logo.png" alt="">ARCID</span><span>Prototipe Stasiun Peminjaman Wadah · SLB-001.</span></footer>
@@ -374,7 +394,7 @@ login:()=>`<div class="ctr"><img class="lg" src="${LOGO}" alt="Logo ARCID"><h3>A
 scan:()=>`<h3>Scan QR stasiun</h3><p class="sub">Pindai QR untuk memulai.</p><div class="view" aria-hidden="true"><i></i></div><p class="sub" style="text-align:center">Arahkan kamera ke QR di stasiun.</p><div class="grow"></div>${btn('free','Contoh: stasiun tersedia')}${btn('busy','Contoh: stasiun sedang dipakai',1)}${btn('login','Batalkan')}`,
 busy:()=>`<div class="ctr">${ic('clock','w')}<h3>Stasiun sedang digunakan</h3><p class="sub">Mohon antre. Stasiun siap setelah transaksi pengguna sebelumnya selesai.</p></div><div class="grow"></div>${btn('scan','Scan ulang')}${btn('login','Kembali',1)}`,
 dash:()=>{const f=st.loans.length>=st.max||st.late,n=st.loans.length;return `<h3>Menu utama</h3>${st.late?'<div class="alert"><b>Ada wadah yang belum dikembalikan.</b><br>Kuota peminjaman dikunci sampai wadah dikembalikan. Pengingat juga dikirim ke email kampus kamu.</div>':''}<div class="box"><b>NIM 2021xxxx</b><br><span class="sub">Budi Santoso</span></div><div class="box"><b>Kuota: ${n}/${st.max} wadah dipinjam</b>${dots()}</div>${btn('borrow','Pinjam wadah','',f)}${f&&!st.late?'<p class="sub" style="margin-top:6px">Kuota penuh. Kembalikan wadah dulu.</p>':''}${btn('ret','Kembalikan wadah',1,!n)}<p style="font-weight:800;margin:16px 0 0">Wadah yang dipinjam</p>${st.loans.map((l,i)=>`<div class="box b"><b>Wadah ${i+1}</b><br><span class="sub">dipinjam ${l.d}</span></div>`).join('')||'<p class="sub">Belum ada wadah yang dipinjam.</p>'}`},
-borrow:()=>`<div class="ctr"><h3>Ambil wadah</h3><p class="sub">Pintu dispenser terbuka. Ambil 1 wadah dari slot.</p></div><div class="slot">${LB}</div><div class="box" id="det">Mendeteksi wadah...</div><div class="grow"></div>${btn('fin','Selesai','',1).replace('<button','<button id="fin"')}`,
+borrow:()=>`<div class="ctr"><h3>Ambil wadah</h3><p class="sub">Pintu stasiun terbuka. Ambil satu wadah dari model stasiun.</p></div><div class="slot">${LB}</div><div class="box" id="det">Menunggu wadah diambil dari stasiun...</div><p class="sub" style="text-align:center;margin-top:10px">Layar ini akan berubah otomatis setelah pintu tertutup.</p><div class="grow"></div>`,
 ret:()=>{st.rid=(st.loans[0]||{id:'WD-042'}).id;return `<h3>Kembalikan</h3><p class="sub">Letakkan wadah di slot pengembalian.</p><div class="slot">${LB}</div><div class="box">Menunggu wadah...</div><div class="grow"></div>${btn('verify','Letakkan wadah · simulasi')}${btn('heavy','Coba berat tidak sesuai · 240 g',1)}${btn('dash','Batalkan pengembalian',1)}`},
 verify:()=>`<h3>Memverifikasi</h3><p class="sub">Pemeriksaan otomatis</p><div class="box"><b>Wadah</b> sedang diperiksa</div><div class="chk" id="c1">RFID terbaca</div><div class="chk" id="c2">Berat ${$('#station-weight')?.value||195} g</div><div class="chk" id="c3">Posisi tepat</div><div class="bar"><i id="pg"></i></div><p class="sub" style="text-align:center;margin-top:8px">Memproses...</p>`,
 ok:()=>`<div class="ctr">${ic('check')}<h3>${st.kind==='ret'?'Pengembalian berhasil':'Peminjaman berhasil'}</h3></div><div class="box b" style="text-align:center">Kuota diperbarui<br><b>${st.loans.length}/${st.max} wadah dipinjam</b></div><div class="grow"></div>${btn('dash','Kembali ke menu')}`,
@@ -385,17 +405,19 @@ late:()=>{st.late=true;return V.dash()}
 const E={
 intro(){later(()=>go('login'),3200)},
 
-borrow(){later(()=>{const weight=Number($('#station-weight')?.value??125);if(weight<60||weight>200){st.msg=`Berat wadah tidak sesuai (${weight} g, batas 60-200 g)`;window.station3D?.setStage('rejected');go('err');return}$('#det').innerHTML='<b>Wadah terdeteksi</b>';$('#fin').disabled=false},1800)},
-verify(){window.station3D?.setStage('reading');[['c1',33],['c2',66],['c3',100]].forEach(([id,w],i)=>later(()=>{$('#'+id).classList.add('on');$('#pg').style.width=w+'%'},600+i*600));const weight=Number($('#station-weight')?.value??195);if(weight<60||weight>200){later(()=>{st.msg=`Berat tidak sesuai (${weight} g, batas 60-200 g)`;window.station3D?.setStage('rejected');go('err')},2100);return}later(()=>{st.loans=st.loans.filter(l=>l.id!==st.rid);st.late=false;st.kind='ret';go('ok')},2700)}
+borrow(){later(()=>{const weight=Number($('#station-weight')?.value??125);if(weight<60||weight>200){st.msg=`Berat wadah tidak sesuai (${weight} g, batas 60-200 g)`;window.station3D?.setStage('rejected');go('err');return}if($('#det'))$('#det').innerHTML='<b>Wadah siap diambil</b><br>Gunakan tombol “Ambil wadah” pada simulasi stasiun.'},1800)},
+verify(){window.station3D?.setStage('reading');[['c1',33],['c2',66],['c3',100]].forEach(([id,w],i)=>later(()=>{$('#'+id)?.classList.add('on');const bar=$('#pg');if(bar)bar.style.width=w+'%'},600+i*600));const weight=Number($('#station-weight')?.value??195);if(weight<60||weight>200){later(()=>{st.msg=`Berat tidak sesuai (${weight} g, batas 60-200 g)`;window.station3D?.setStage('rejected');go('err')},2100)}}
 };
 const A={
 scan:()=>go('scan'),login:()=>go('login'),busy:()=>go('busy'),free:()=>go('dash'),dash:()=>go('dash'),borrow:()=>go('borrow'),ret:()=>go('ret'),verify:()=>go('verify'),
 heavy:()=>{st.msg='Berat tidak sesuai (240 g, batas 60-200 g)';const slider=$('#station-weight');if(slider){slider.value=240;$('#station-weight-value').textContent='240'}window.station3D?.setStage('rejected');go('err')},
-fin:()=>{st.loans.push({id:'WD-089',d:'30 Okt 2026'});st.kind='borrow';window.station3D?.completeBorrow();go('ok')}
 };
 function clr(){clearInterval(st.tm);st.tt.forEach(clearTimeout);st.tt=[]}
 function go(n){clr();clearTimeout(st.screenTimer);const scr=$('#scr');const render=()=>{st.cur=n;scr.dataset.s=n;scr.innerHTML=V[n]();document.querySelectorAll('#chips button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.n===n));if(E[n])E[n]();window.station3D?.setFromPhone(n,st.kind);requestAnimationFrame(()=>scr.classList.remove('switching'))};if(!scr.innerHTML||RM)scr.classList.remove('switching'),render();else{scr.classList.add('switching');st.screenTimer=setTimeout(render,160)}}
 window.stationPhoneNavigate=n=>go(n);
+window.stationPhoneComplete=kind=>{if(kind==='borrow'){st.kind='borrow';st.loans.push({id:'WD-089',d:new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'})})}else{st.kind='ret';st.loans=st.loans.filter(l=>l.id!==st.rid);st.late=false}go('ok')};
+window.stationPhoneReject=message=>{st.msg=message;go('err')};
+window.stationProgress=(kind,stage,mode='active')=>{const returning=kind==='return';const labels=returning?['Pintu terbuka','RFID terbaca','Berat diperiksa','Server menerima','Pintu tertutup']:['RFID terbaca','Berat diperiksa','Server validasi','Wadah diambil','Pintu tertutup'];const map=returning?{door:0,rfid:1,weight:2,server:3,closing:4,done:4,rejected:3}:{rfid:0,weight:1,server:2,door:3,removed:3,closing:4,done:4,rejected:2};const index=map[stage]??-1;document.querySelectorAll('.station-sync-step').forEach((el,i)=>{el.querySelector('span').textContent=labels[i];el.classList.toggle('done',stage==='done'||(index>=0&&i<index));el.classList.toggle('active',stage!=='done'&&mode!=='error'&&i===index);el.classList.toggle('error',mode==='error'&&i===index);el.querySelector('i').textContent=stage==='done'||(index>=0&&i<index)?'✓':String(i+1)});const status=$('#station-sync-status');if(status){const msg={idle:'Pilih Pinjam atau Kembalikan untuk mulai',rfid:'Membaca identitas wadah',weight:'Memeriksa berat wadah',server:'Menunggu validasi transaksi',door:returning?'Pintu pengembalian terbuka':'Pintu terbuka · ambil wadah',removed:'Wadah diambil · pintu akan menutup',closing:'Pintu sedang menutup',done:'Selesai · layar web dan stasiun sudah sinkron',rejected:'Transaksi ditolak · periksa keterangan pada layar web'};status.textContent=msg[stage]||msg.idle}};
 $('#scr').addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(b&&!b.disabled)A[b.dataset.a]()});
 $('#chips').innerHTML=Object.entries(N).map(([k,v])=>`<button data-n="${k}">${v}</button>`).join('');
 $('#chips').addEventListener('click',e=>{const b=e.target.closest('[data-n]');if(b){if(b.dataset.n==='dash')st.late=false;go(b.dataset.n)}});
